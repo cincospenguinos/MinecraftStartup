@@ -36,8 +36,19 @@ const password = (input) => {
   return errors;
 }
 
+const passwordConfirmation = (input, savedPassword) => {
+  const errors = password(input);
+
+  if (input !== savedPassword) {
+    errors.push('Password and password confirmation must match');
+  }
+
+  return errors;
+};
+
 export default {
   name,
   email,
   password,
+  passwordConfirmation,
 };

@@ -7,16 +7,6 @@ import styles from './styles.module.css';
 export default function SignupApp() {
   const [password, setPassword] = useState();
 
-  const confirmationValidation = (value) => {
-    const errors = validations.default.password(value);
-
-    if (value !== password) {
-      errors.push('Password and password confirmation must match');
-    }
-
-    return errors;
-  };
-
   return (
     <div className={styles.container}>
       <h2 className={styles.header}>Signup</h2>
@@ -42,7 +32,7 @@ export default function SignupApp() {
         id="confirm-password"
         type="password"
         label="Confirm Password"
-        isValid={confirmationValidation}
+        isValid={val => validations.default.passwordConfirmation(val, password)}
       />
     </div>
   );
