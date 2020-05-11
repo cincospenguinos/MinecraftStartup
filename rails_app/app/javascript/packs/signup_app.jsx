@@ -1,22 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import ValidatedInputField from "./components/validated-input-field/validated-input-field";
 
-const Hello = props => (
-  <div>Hello {props.name}!</div>
-)
-
-Hello.defaultProps = {
-  name: 'David'
-}
-
-Hello.propTypes = {
-  name: PropTypes.string
+function SignupApp() {
+  return (
+    <div>
+      <ValidatedInputField label="Name" id="name" />
+    </div>
+  );
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <Hello name="React" />,
+    <SignupApp />,
     document.body.appendChild(document.createElement('div')),
   )
 })

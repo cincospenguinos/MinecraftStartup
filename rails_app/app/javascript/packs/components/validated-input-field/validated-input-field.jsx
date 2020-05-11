@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './styles.module.css';
 
 export default function ValidatedInputField(props) {
   const onChange = (event) => {
@@ -11,6 +12,7 @@ export default function ValidatedInputField(props) {
     <div>
       <label htmlFor={props.id}>{props.label}</label>
       <input
+        className={styles.input}
         id={props.id}
         onChange={onChange}
         type="text"
