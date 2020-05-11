@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.module.css';
 
 export default function ValidatedInputField(props) {
+  const [errors, setErrors] = useState([]);
+
   const onChange = (event) => {
     const { value } = event.target;
-    props.isValid(value);
+    const errors = props.isValid(value);
+    setErrors(errors);
   }
 
+  const errorsToShow = () => {
+    return (<ul>
+      { errors.map(e => <li key={e}>{e}</li>) }
+    </ul>);
+  };
+
+  const showErrors = errors.length > 0;
+
   return (
-    <div>
+    <div className={styles.container}>
       <label htmlFor={props.id}>{props.label}</label>
       <input
         className={styles.input}
@@ -17,6 +28,7 @@ export default function ValidatedInputField(props) {
         onChange={onChange}
         type="text"
       />
+      { showErrors && errorsToShow() }
     </div>
   );
 }

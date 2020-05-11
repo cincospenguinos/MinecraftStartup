@@ -1,5 +1,5 @@
 import React from 'react';
-import td from 'testdouble';
+import td, { when } from 'testdouble';
 import { render, fireEvent, cleanup } from "@testing-library/react";
 import ValidatedInputField from "./validated-input-field";
 
@@ -25,10 +25,19 @@ describe('app/javascript/packs/components/validated-input-field', () => {
    describe('valdiation API', () => {
      it('validates its input with a provided function', () => {
        const isValid = td.func();
-       const { getByLabelText } = renderComponent({ isValid });
+       when(isValid(td.matchers.anything())).thenReturn([]);
+       const { queryByText, getByLabelText } = renderComponent({ isValid });
        fireEvent.change(getByLabelText('Some label'), { target: { value: 'foo' } });
 
-       td.verify(isValid('foo'));
+       expect(queryByText('bologna')).toBeFalsy();
+     });
+
+     it('presents an error when invalid', () => {
+       const isValid = () => ['This is bologna'];
+       const { getByText, getByLabelText } = renderComponent({ isValid });
+       fireEvent.change(getByLabelText('Some label'), { target: { value: 'foo' } });
+
+       expect(getByText('This is bologna')).toBeDefined();
      });
    });
 });
