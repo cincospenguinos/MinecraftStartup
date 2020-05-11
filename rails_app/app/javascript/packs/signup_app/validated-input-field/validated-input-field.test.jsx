@@ -47,4 +47,14 @@ describe('app/javascript/packs/signup_app/validated-input-field', () => {
        expect(getByLabelText('Some label').getAttribute('type')).toBe('email');
      });
    });
+
+   describe('onChange API', () => {
+     it('accepts an onChange listener', () => {
+       const onChange = td.func();
+       const { getByLabelText } = renderComponent({ onChange });
+       fireEvent.change(getByLabelText('Some label'), { target: { value: 'asdf' } });
+
+       td.verify(onChange('asdf'));
+     });
+   });
 });

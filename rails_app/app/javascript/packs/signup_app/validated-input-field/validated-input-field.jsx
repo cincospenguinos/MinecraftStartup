@@ -10,6 +10,7 @@ export default function ValidatedInputField(props) {
     const { value } = event.target;
     const errors = props.isValid(value);
     setErrors(errors);
+    props.onChange(value);
   }
 
   const showErrors = errors.length > 0;
@@ -33,11 +34,13 @@ export default function ValidatedInputField(props) {
 ValidatedInputField.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
   isValid: PropTypes.func,
   type: PropTypes.oneOf(['text', 'email', 'password'])
 };
 
 ValidatedInputField.defaultProps = {
+  onChange: () => {},
   isValid: () => [],
   type: 'text',
 };
