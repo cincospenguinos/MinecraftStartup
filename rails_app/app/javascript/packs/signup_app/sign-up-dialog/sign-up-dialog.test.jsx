@@ -1,9 +1,10 @@
 import React from 'react';
+import td from 'testdouble';
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import SignupApp from "./signup-app";
+import SignUpDialog from "./sign-up-dialog";
 
-describe('app/javascript/packs/signup_app', () => {
-  const renderComponent = (props = {}) => render(<SignupApp {...props} />);
+describe('app/javascript/packs/signup_app/sign-up-dialog', () => {
+  const renderComponent = (props = {}) => render(<SignUpDialog {...props} />);
 
   afterEach(cleanup);
 
@@ -27,5 +28,18 @@ describe('app/javascript/packs/signup_app', () => {
     fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
 
     expect(getByRole('button').getAttribute('disabled')).not.toBe('');
+  });
+
+  it('accepts an onSave listener', () => {
+    const onSave = td.func();
+    const { getByLabelText, getByRole } = renderComponent({ onSave });
+
+    fireEvent.change(getByLabelText('Name'), { target: { value: 'Joe Blow' } });
+    fireEvent.change(getByLabelText('Email Address'), { target: { value: 'joe@blow.com' } });
+    fireEvent.change(getByLabelText('Password'), { target: { value: 'password' }});
+    fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
+    fireEvent.click(getByRole('button'));
+
+    td.verify(onSave());
   });
 });

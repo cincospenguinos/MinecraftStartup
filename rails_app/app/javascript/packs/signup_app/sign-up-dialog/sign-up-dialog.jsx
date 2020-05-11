@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
-import ValidatedInputField from "./validated-input-field/validated-input-field";
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types';
+import ValidatedInputField from "../validated-input-field/validated-input-field";
 import * as validations from "./validations";
-import styles from './styles.module.css';
-import SignUpButton from "./sign-up-button/sign-up-button";
+import SignUpButton from "../sign-up-button/sign-up-button";
 
-export default function SignupApp() {
+export default function SignUpDialog(props) {
   const [name, setName] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
@@ -21,8 +21,7 @@ export default function SignupApp() {
   }, [name, emailAddress, password, confirmPassword]);
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.header}>Signup</h2>
+    <React.Fragment>
       <ValidatedInputField
         id="name"
         isValid={validations.default.name}
@@ -50,7 +49,15 @@ export default function SignupApp() {
         label="Confirm Password"
         onChange={val => setConfirmPassword(val)}
       />
-      <SignUpButton enabled={canSave} />
-    </div>
+      <SignUpButton onClick={() => props.onSave()} enabled={canSave} />
+    </React.Fragment>
   );
 }
+
+SignUpDialog.propTypes = {
+  onSave: PropTypes.func,
+};
+
+SignUpDialog.defaultProps = {
+  onSave: () => {},
+};

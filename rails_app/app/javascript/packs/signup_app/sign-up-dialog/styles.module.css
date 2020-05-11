@@ -13,6 +13,17 @@
     margin: 4px 0 16px 0;
 }
 
+.head-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.toggle {
+    cursor: pointer;
+    font-size: x-small;
+}
+
 .super-container {
     display: flex;
     flex-direction: column;
