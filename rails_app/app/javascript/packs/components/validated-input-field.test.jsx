@@ -13,4 +13,11 @@ describe('app/javascript/packs/components/validated-input-field', () => {
           expect(getByLabelText('FOO')).toBeDefined();
       });
    });
+
+   describe('id API', () => {
+     it('takes an ID', () => {
+       const { getByLabelText } = renderComponent({ id: 'yo' });
+       expect(getByLabelText('Some label').getAttribute('id')).toBe('yo');
+     });
+   });
 });
