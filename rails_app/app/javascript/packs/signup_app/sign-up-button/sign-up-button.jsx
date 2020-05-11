@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './styles.module.css';
 
 export default function SignUpButton(props) {
+  const className = props.enabled ? styles.button : styles.disabled;
+
   return (<button
+    className={className}
     disabled={!props.enabled}
-    role="button"
     onClick={() => props.onClick()}
+    role="button"
   >
     Sign Up
   </button>);
