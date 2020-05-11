@@ -14,7 +14,7 @@ export default function ValidatedInputField(props) {
 
   const showErrors = errors.length > 0;
   const inputClassName = showErrors ? styles.error : styles.input;
-  const labelClassName = showErrors ? styles['label-error'] : undefined;
+  const labelClassName = showErrors ? styles['label-error'] : styles.label;
 
   return (
     <div className={styles.container}>

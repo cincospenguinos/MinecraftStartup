@@ -12,4 +12,15 @@ describe('app/javascript/packs/signup_app/validations', () => {
       expect(validations.name('Hello')).toEqual([]);
     });
   });
+
+  describe('email', () => {
+    it('cannot be empty', () => {
+      expect(validations.email('')).toContain('Email address cannot be empty');
+    });
+
+    it('does not accept an incorrect email address', () => {
+      const email = 'this is not valid';
+      expect(validations.email(email)).toContain('Email address must follow correct format');
+    });
+  });
 })

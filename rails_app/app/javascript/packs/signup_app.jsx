@@ -17,6 +17,7 @@ function SignupApp() {
         label="Email Address"
         id="email-address"
         type="email"
+        isValid={validations.default.email}
       />
     </div>
   );

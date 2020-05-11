@@ -11,7 +11,12 @@
     font-size: small;
 }
 
+.label {
+    margin-bottom: 4px;
+}
+
 .label-error {
+    composes: label;
     color: var(--color-error-dark);
     font-weight: bold;
 }
