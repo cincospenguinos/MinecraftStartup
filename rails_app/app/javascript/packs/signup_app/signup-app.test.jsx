@@ -21,8 +21,8 @@ describe('app/javascript/packs/signup_app', () => {
     const { getByLabelText, getByRole } = renderComponent();
     expect(getByRole('button').getAttribute('disabled')).toBe('');
 
-    fireEvent.change(getByLabelText('Name', { target: { value: 'Joe Blow' } }));
-    fireEvent.change(getByLabelText('Email Address', { target: { value: 'joe@blow.com' } }));
+    fireEvent.change(getByLabelText('Name'), { target: { value: 'Joe Blow' } });
+    fireEvent.change(getByLabelText('Email Address'), { target: { value: 'joe@blow.com' } });
     fireEvent.change(getByLabelText('Password'), { target: { value: 'password' }});
     fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
 
