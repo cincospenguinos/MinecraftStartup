@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.module.css';
 
-export default function SignUpButton(props) {
+export default function ActionButton(props) {
   const className = props.enabled ? styles.button : styles.disabled;
 
   return (<button
@@ -11,16 +11,17 @@ export default function SignUpButton(props) {
     onClick={() => props.onClick()}
     role="button"
   >
-    Sign Up
+    {props.label}
   </button>);
 }
 
-SignUpButton.propTypes = {
+ActionButton.propTypes = {
   enabled: PropTypes.bool,
+  label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };
 
-SignUpButton.defaultProps = {
+ActionButton.defaultProps = {
   enabled: true,
   onClick: () => {},
 };

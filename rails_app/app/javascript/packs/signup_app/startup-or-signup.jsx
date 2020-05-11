@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import SignUpDialog from "./sign-up-dialog/sign-up-dialog";
 import styles from "./sign-up-dialog/styles.module.css";
+import StartupDialog from "./startup-dialog/startup-dialog";
 
 const internalProps = {
   startup: {
-    dialog: () => {},
+    dialog: () => <StartupDialog />,
     header: 'Start the Server',
     onClick: (setCurrentDialog) => setCurrentDialog('signUp'),
     toggleText: "Haven't joined?",

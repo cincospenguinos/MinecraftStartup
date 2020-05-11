@@ -20,8 +20,10 @@
 }
 
 .toggle {
+    color: var(--color-neutral-dark);
     cursor: pointer;
     font-size: x-small;
+    text-decoration: underline;
 }
 
 .super-container {

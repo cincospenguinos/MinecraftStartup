@@ -1,10 +1,10 @@
 import React from 'react';
 import td from 'testdouble';
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import SignUpButton from "./sign-up-button";
+import ActionButton from "./action-button";
 
-describe('app/javascript/packs/signup_app/sign-up-button/sign-up-button', () => {
-  const renderComponent = (props = {}) => render(<SignUpButton {...props} />);
+describe('app/javascript/packs/signup_app/action-button/action-button', () => {
+  const renderComponent = (props = {}) => render(<ActionButton label="Foo" {...props} />);
 
   afterEach(cleanup);
 
@@ -27,6 +27,13 @@ describe('app/javascript/packs/signup_app/sign-up-button/sign-up-button', () => 
     it('can be enabled', () => {
       const { getByRole } = renderComponent({ enabled: true });
       expect(getByRole('button').getAttribute('disabled')).not.toEqual('');
+    });
+  });
+
+  describe('label API', () => {
+    it('accepts a label', () => {
+      const { getByText } = renderComponent({ label: 'Hello!' });
+      expect(getByText('Hello!')).toBeTruthy();
     });
   });
 });

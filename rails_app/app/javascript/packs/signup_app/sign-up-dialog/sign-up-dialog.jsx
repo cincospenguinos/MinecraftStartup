@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import ValidatedInputField from "../validated-input-field/validated-input-field";
 import * as validations from "./validations";
-import SignUpButton from "../sign-up-button/sign-up-button";
+import ActionButton from "../action-button/action-button";
 
 export default function SignUpDialog(props) {
   const [name, setName] = useState('');
@@ -49,7 +49,7 @@ export default function SignUpDialog(props) {
         label="Confirm Password"
         onChange={val => setConfirmPassword(val)}
       />
-      <SignUpButton onClick={() => props.onSave()} enabled={canSave} />
+      <ActionButton label="Sign Up" onClick={() => props.onSave()} enabled={canSave} />
     </React.Fragment>
   );
 }
