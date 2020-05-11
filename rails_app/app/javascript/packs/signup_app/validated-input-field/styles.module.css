@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0;
+}
+
+.input {
+    border-radius: 3px;
+    border: 1px solid var(--color-neutral);
+    padding: 8px;
+    font-size: small;
+}
+
+.label-error {
+    color: var(--color-error-dark);
+    font-weight: bold;
+}
+
+.error {
+    composes: input;
+    border: 2px solid var(--color-error);
+}

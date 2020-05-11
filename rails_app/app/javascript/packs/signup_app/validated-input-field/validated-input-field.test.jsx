@@ -3,7 +3,7 @@ import td, { when } from 'testdouble';
 import { render, fireEvent, cleanup } from "@testing-library/react";
 import ValidatedInputField from "./validated-input-field";
 
-describe('app/javascript/packs/components/validated-input-field', () => {
+describe('app/javascript/packs/signup_app/validated-input-field', () => {
    const renderComponent = (props = {}) =>  render(<ValidatedInputField id="foo" label="Some label" {...props} />);
 
    afterEach(cleanup);

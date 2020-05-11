@@ -1,0 +1,20 @@
+.container {
+    border: 2px solid var(--color-neutral-dark);
+    display: flex;
+    flex-direction: column;
+    margin: 8px;
+    max-width: 500px;
+    min-width: 300px;
+    align-self: center;
+    padding: 16px;
+}
+
+.header {
+    margin: 4px 0 16px 0;
+}
+
+.super-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
