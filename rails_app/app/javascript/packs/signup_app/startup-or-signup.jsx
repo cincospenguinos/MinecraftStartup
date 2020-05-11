@@ -5,13 +5,13 @@ import StartupDialog from "./startup-dialog/startup-dialog";
 
 const internalProps = {
   startup: {
-    dialog: () => <StartupDialog />,
+    dialog: (onClick) => <StartupDialog onClick={onClick} />,
     header: 'Start the Server',
     onClick: (setCurrentDialog) => setCurrentDialog('signUp'),
     toggleText: "Haven't joined?",
   },
   signUp: {
-    dialog: () => <SignUpDialog />,
+    dialog: (onClick) => <SignUpDialog onClick={onClick} />,
     header: 'Sign Up',
     onClick: (setCurrentDialog) => setCurrentDialog('startup'),
     toggleText: "Already a member?",

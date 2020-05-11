@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 import ValidatedInputField from "../validated-input-field/validated-input-field";
 import ActionButton from "../action-button/action-button";
 
-export default function StartupDialog() {
+export default function StartupDialog(props) {
   const [isReady, setIsReady] = useState(false);
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
@@ -25,7 +26,19 @@ export default function StartupDialog() {
         onChange={(val) => setPassword(val)}
         type="password"
       />
-      <ActionButton enabled={isReady} label="Start" />
+      <ActionButton
+        enabled={isReady}
+        label="Start"
+        onClick={() => props.onSave()}
+      />
    </React.Fragment>
   );
 }
+
+StartupDialog.propTypes = {
+  onSave: PropTypes.func,
+};
+
+StartupDialog.defaultProps = {
+  onSave: () => {},
+};
