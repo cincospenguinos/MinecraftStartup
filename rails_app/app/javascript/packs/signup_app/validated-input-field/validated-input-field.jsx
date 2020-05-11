@@ -23,7 +23,7 @@ export default function ValidatedInputField(props) {
         className={inputClassName}
         id={props.id}
         onChange={onChange}
-        type="text"
+        type={props.type}
       />
       { showErrors && <ValidationErrors errors={errors} /> }
     </div>
@@ -34,8 +34,10 @@ ValidatedInputField.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   isValid: PropTypes.func,
+  type: PropTypes.oneOf(['text', 'email'])
 };
 
 ValidatedInputField.defaultProps = {
-  isValid: () => {},
+  isValid: () => [],
+  type: 'text',
 };

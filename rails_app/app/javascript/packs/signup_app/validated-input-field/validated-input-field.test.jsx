@@ -40,4 +40,11 @@ describe('app/javascript/packs/signup_app/validated-input-field', () => {
        expect(getByText('This is bologna')).toBeDefined();
      });
    });
+
+   describe('type API', () => {
+     it('uses the type provided', () => {
+       const { getByLabelText } = renderComponent({ type: 'email' });
+       expect(getByLabelText('Some label').getAttribute('type')).toBe('email');
+     });
+   });
 });
