@@ -19,6 +19,18 @@ function SignupApp() {
         type="email"
         isValid={validations.default.email}
       />
+      <ValidatedInputField
+        label="Password"
+        id="password"
+        type="password"
+        isValid={validations.default.password}
+      />
+      <ValidatedInputField
+        label="Confirm Password"
+        id="confirm-password"
+        type="password"
+        isValid={validations.default.password}
+      />
     </div>
   );
 }

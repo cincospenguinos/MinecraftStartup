@@ -34,7 +34,7 @@ ValidatedInputField.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   isValid: PropTypes.func,
-  type: PropTypes.oneOf(['text', 'email'])
+  type: PropTypes.oneOf(['text', 'email', 'password'])
 };
 
 ValidatedInputField.defaultProps = {

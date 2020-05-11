@@ -23,4 +23,18 @@ describe('app/javascript/packs/signup_app/validations', () => {
       expect(validations.email(email)).toContain('Email address must follow correct format');
     });
   });
+
+  describe('password', () => {
+    it('has to be at least eight characters long', () => {
+      expect(validations.password('hey')).toContain('Passwords must be at least 8 characters long');
+    });
+
+    it('cannot be empty', () => {
+      expect(validations.password('')).toContain('Passwords cannot be empty');
+    });
+
+    it('accepts a valid password', () => {
+      expect(validations.password('12345678')).toEqual([]);
+    })
+  })
 })
