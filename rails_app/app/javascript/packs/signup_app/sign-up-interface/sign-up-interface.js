@@ -1,9 +1,8 @@
 import axios from 'axios';
+import * as caseConversion from '../../../util/caseConversion';
 
 export default class SignUpInterface {
   static ENDPOINT = '/signup';
-
-  constructor() {}
 
   async submit(userData) {
     const params = this._toParams(userData);
@@ -30,20 +29,10 @@ export default class SignUpInterface {
     const { errors } = backendResponse.response.data;
 
     const expectedResponse = { errors: {} };
+    const { toCamelCase } = caseConversion.default;
 
     Object.keys(errors).forEach((key) => {
-      const split = key.split('_');
-
-      let camelCaseKey = split[0];
-
-      for (let i = 1; i < split.length; i++) {
-        const splitWord = split[i];
-        const upperCaseCharacter = splitWord.slice(0, 1).toUpperCase();
-        const upperCaseWord = `${upperCaseCharacter}${splitWord.slice(1, splitWord.length)}`;
-
-        camelCaseKey = `${camelCaseKey}${upperCaseWord}`;
-      }
-
+      let camelCaseKey = toCamelCase(key);
       expectedResponse.errors[camelCaseKey] = errors[key].map(str => str.toLowerCase());
     });
 
