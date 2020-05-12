@@ -12,4 +12,16 @@ describe('app/javascript/util/caseConversion', () => {
       expect(result).toEqual('thisIsSnakeCase');
     });
   });
+
+  describe('#toSnakeCase', () => {
+    it('handles regular strings', () => {
+      const result = caseConversion.default.toSnakeCase('word');
+      expect(result).toEqual('word');
+    });
+
+    it('handles an arbitrary camel case', () => {
+      const result = caseConversion.default.toSnakeCase('thisIsCamelCase');
+      expect(result).toEqual('this_is_camel_case');
+    });
+  });
 });

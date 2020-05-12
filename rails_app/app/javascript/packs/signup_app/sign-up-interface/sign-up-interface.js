@@ -15,19 +15,19 @@ export default class SignUpInterface {
   }
 
   _toParams(userData) {
-    return {
-      user: {
-        name: userData.name,
-        email_address: userData.emailAddress,
-        password: userData.password,
-        password_confirmation: userData.passwordConfirmation,
-      }
-    };
+    const params = { user: {} };
+    const { toSnakeCase } = caseConversion.default;
+
+    Object.keys(userData).forEach((key) => {
+      const snakeCaseKey = toSnakeCase(key);
+      params.user[snakeCaseKey] = userData[key];
+    });
+
+    return params;
   }
 
   _toExpectedResponse(backendResponse) {
     const { errors } = backendResponse.response.data;
-
     const expectedResponse = { errors: {} };
     const { toCamelCase } = caseConversion.default;
 
