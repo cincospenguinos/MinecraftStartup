@@ -17,6 +17,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "@testing-library/react": "^10.0.4",
+    "axios-mock-adapter": "^1.18.1",
     "css-loader": "^3.5.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.0.1",
