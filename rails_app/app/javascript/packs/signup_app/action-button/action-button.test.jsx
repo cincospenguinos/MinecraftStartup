@@ -6,7 +6,10 @@ import ActionButton from "./action-button";
 describe('app/javascript/packs/signup_app/action-button/action-button', () => {
   const renderComponent = (props = {}) => render(<ActionButton label="Foo" {...props} />);
 
-  afterEach(cleanup);
+  afterEach(() => {
+    td.reset();
+    cleanup();
+  });
 
   describe('onClick API', () => {
     it('accepts an onClick listener', () => {

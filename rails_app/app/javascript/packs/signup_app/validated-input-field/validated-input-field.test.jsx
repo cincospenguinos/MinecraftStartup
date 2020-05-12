@@ -6,7 +6,10 @@ import ValidatedInputField from "./validated-input-field";
 describe('app/javascript/packs/signup_app/validated-input-field', () => {
    const renderComponent = (props = {}) =>  render(<ValidatedInputField id="foo" label="Some label" {...props} />);
 
-   afterEach(cleanup);
+  afterEach(() => {
+    td.reset();
+    cleanup();
+  });
 
    describe('label API', () => {
       it('takes a label', () => {

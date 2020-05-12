@@ -6,7 +6,10 @@ import StartupDialog from "./startup-dialog";
 describe('app/javascript/packs/signup_app/startup-dialog/startup-dialog', () => {
   const renderComponent = (props = {}) => render(<StartupDialog {...props} />);
 
-  afterEach(cleanup);
+  afterEach(() => {
+    td.reset();
+    cleanup();
+  });
 
   it('disables the start button until fields are filled', () => {
     const { getByLabelText, getByRole } = renderComponent();

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ValidatedInputField from "../validated-input-field/validated-input-field";
 import * as validations from "./validations";
 import ActionButton from "../action-button/action-button";
+import SignUpInterface from "../sign-up-interface/sign-up-interface";
 
 export default function SignUpDialog(props) {
   const [name, setName] = useState('');
@@ -19,6 +20,11 @@ export default function SignUpDialog(props) {
 
     setCanSave(errors.length === 0);
   }, [name, emailAddress, password, confirmPassword]);
+
+  const onClick = () => {
+    props.signUpInterface.submit({ name, emailAddress, password, confirmPassword });
+    props.onSave();
+  };
 
   return (
     <React.Fragment>
@@ -49,15 +55,17 @@ export default function SignUpDialog(props) {
         label="Confirm Password"
         onChange={val => setConfirmPassword(val)}
       />
-      <ActionButton label="Sign Up" onClick={() => props.onSave()} enabled={canSave} />
+      <ActionButton label="Sign Up" onClick={() => onClick()} enabled={canSave} />
     </React.Fragment>
   );
 }
 
 SignUpDialog.propTypes = {
   onSave: PropTypes.func,
+  signUpInterface: PropTypes.shape({ submit: PropTypes.func.isRequired }),
 };
 
 SignUpDialog.defaultProps = {
   onSave: () => {},
+  signUpInterface: new SignUpInterface(),
 };
