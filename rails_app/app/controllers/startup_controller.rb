@@ -1,3 +1,5 @@
 class StartupController < ApplicationController
-  def index; end
+  def index
+    @csrf_token = form_authenticity_token
+  end
 end

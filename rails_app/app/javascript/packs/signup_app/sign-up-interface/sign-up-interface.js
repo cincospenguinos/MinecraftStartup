@@ -6,8 +6,10 @@ export default class SignUpInterface {
 
   async submit(userData) {
     const params = this._toParams(userData);
+    const config = SignUpInterface.getConfig();
+
     let serverResponse = {};
-    await axios.post(SignUpInterface.ENDPOINT, params)
+    await axios.post(SignUpInterface.ENDPOINT, params, config)
       .then(_ => serverResponse = { errors: {}})
       .catch(response => serverResponse = this._toExpectedResponse(response));
 
@@ -37,5 +39,18 @@ export default class SignUpInterface {
     });
 
     return expectedResponse;
+  }
+
+  static setCSRFToken(csrfToken) {
+    SignUpInterface.CSRF_TOKEN = csrfToken;
+  }
+
+  static getConfig() {
+    return {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': SignUpInterface.CSRF_TOKEN,
+      },
+    };
   }
 }

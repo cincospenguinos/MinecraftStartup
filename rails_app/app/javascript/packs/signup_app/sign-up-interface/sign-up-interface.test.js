@@ -16,7 +16,25 @@ describe('app/javascript/packs/signup_app/sign-up-interface/sign-up-interface', 
       password_confirmation: 'passwordd'
     }};
 
-  it('handles submitting a sign up request', async () => {
+  it('allows setting of a CSRF token', async () => {
+    const mock = new MockAdapter(axios);
+    mock.onPost(SignUpInterface.ENDPOINT, validParams)
+      .reply(400, { errors: { success: ['yes'] } });
+
+    SignUpInterface.setCSRFToken('do you sell your tokens for money?');
+    const signUpInterface = new SignUpInterface();
+    const response = await signUpInterface.submit({
+      name: 'Joe',
+      emailAddress: 'joe@blow.com',
+      password: 'password',
+      passwordConfirmation: 'password'
+    });
+
+    const sentCSRFToken = mock.history.post[0].headers['X-CSRF-TOKEN'];
+    expect(sentCSRFToken).toEqual('do you sell your tokens for money?');
+  });
+
+  it('handles a successful sign up request', async () => {
     const mock = new MockAdapter(axios);
     mock.onPost(SignUpInterface.ENDPOINT, validParams)
       .reply(200, () => { return {} });
@@ -34,7 +52,7 @@ describe('app/javascript/packs/signup_app/sign-up-interface/sign-up-interface', 
     });
   });
 
-  it('handles a failed response', async () => {
+  it('handles a bad request', async () => {
     const mock = new MockAdapter(axios);
     mock.onPost(SignUpInterface.ENDPOINT, invalidParams)
       .reply(400, { errors: {
