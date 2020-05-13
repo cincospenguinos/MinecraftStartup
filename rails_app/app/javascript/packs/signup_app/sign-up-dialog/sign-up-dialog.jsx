@@ -22,8 +22,15 @@ export default function SignUpDialog(props) {
   }, [name, emailAddress, password, confirmPassword]);
 
   const onClick = () => {
-    props.signUpInterface.submit({ name, emailAddress, password, confirmPassword });
-    props.onSave();
+    props.signUpInterface
+      .submit({ name, emailAddress, password, confirmPassword })
+      .then((response) => {
+        const numberOfErrors = Object.keys(response.errors).length;
+
+        if (numberOfErrors === 0) {
+          props.onSave('sign-up');
+        }
+      });
   };
 
   return (

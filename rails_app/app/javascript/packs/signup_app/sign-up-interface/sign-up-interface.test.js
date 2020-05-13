@@ -23,7 +23,7 @@ describe('app/javascript/packs/signup_app/sign-up-interface/sign-up-interface', 
 
     SignUpInterface.setCSRFToken('do you sell your tokens for money?');
     const signUpInterface = new SignUpInterface();
-    const response = await signUpInterface.submit({
+    await signUpInterface.submit({
       name: 'Joe',
       emailAddress: 'joe@blow.com',
       password: 'password',

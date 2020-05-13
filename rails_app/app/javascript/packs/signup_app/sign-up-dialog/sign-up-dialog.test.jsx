@@ -33,30 +33,34 @@ describe('app/javascript/packs/signup_app/sign-up-dialog', () => {
     expect(getByRole('button').getAttribute('disabled')).not.toBe('');
   });
 
-  it('submits data to the backend', () => {
-    const mockSignupInterface = { submit: () => {} };
-    td.replace(mockSignupInterface, 'submit');
-    const { getByLabelText, getByRole } = renderComponent({ signUpInterface: mockSignupInterface });
+  describe('onSave listener', () => {
+    it('calls with sign-up when successful', async () => {
+      const signUpInterface = { submit: () => Promise.resolve({ errors: {} }) };
+      const onSave = td.func();
+      const { getByLabelText, getByRole } = renderComponent({ onSave, signUpInterface });
 
-    fireEvent.change(getByLabelText('Name'), { target: { value: 'Joe Blow' } });
-    fireEvent.change(getByLabelText('Email Address'), { target: { value: 'joe@blow.com' } });
-    fireEvent.change(getByLabelText('Password'), { target: { value: 'password' }});
-    fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
-    fireEvent.click(getByRole('button'));
+      fireEvent.change(getByLabelText('Name'), { target: { value: 'Joe Blow' } });
+      fireEvent.change(getByLabelText('Email Address'), { target: { value: 'joe@blow.com' } });
+      fireEvent.change(getByLabelText('Password'), { target: { value: 'password' }});
+      fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
+      await fireEvent.click(getByRole('button'));
 
-    td.verify(mockSignupInterface.submit(td.matchers.anything()));
-  });
+      td.verify(onSave('sign-up'));
+    });
 
-  it('accepts an onSave listener', () => {
-    const onSave = td.func();
-    const { getByLabelText, getByRole } = renderComponent({ onSave });
+    it('does not get called when unsuccessful', async () => {
+      const failedRequest = Promise.resolve({ errors: { password: ['password is not cool enough'] } });
+      const signUpInterface = { submit: () => failedRequest };
+      const onSave = td.func();
+      const { getByLabelText, getByRole } = renderComponent({ onSave, signUpInterface });
 
-    fireEvent.change(getByLabelText('Name'), { target: { value: 'Joe Blow' } });
-    fireEvent.change(getByLabelText('Email Address'), { target: { value: 'joe@blow.com' } });
-    fireEvent.change(getByLabelText('Password'), { target: { value: 'password' }});
-    fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
-    fireEvent.click(getByRole('button'));
+      fireEvent.change(getByLabelText('Name'), { target: { value: 'Joe Blow' } });
+      fireEvent.change(getByLabelText('Email Address'), { target: { value: 'joe@blow.com' } });
+      fireEvent.change(getByLabelText('Password'), { target: { value: 'password' }});
+      fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
+      await fireEvent.click(getByRole('button'));
 
-    td.verify(onSave());
+      td.verify(onSave('sign-up'), { times: 0 });
+    });
   });
 });

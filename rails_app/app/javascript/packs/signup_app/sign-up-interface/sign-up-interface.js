@@ -4,16 +4,13 @@ import * as caseConversion from '../../../util/caseConversion';
 export default class SignUpInterface {
   static ENDPOINT = '/signup';
 
-  async submit(userData) {
+  submit(userData) {
     const params = this._toParams(userData);
     const config = SignUpInterface.getConfig();
 
-    let serverResponse = {};
-    await axios.post(SignUpInterface.ENDPOINT, params, config)
-      .then(_ => serverResponse = { errors: {}})
-      .catch(response => serverResponse = this._toExpectedResponse(response));
-
-    return serverResponse;
+    return axios.post(SignUpInterface.ENDPOINT, params, config)
+      .then(_ => { return { errors: {}} })
+      .catch(response => this._toExpectedResponse(response));
   }
 
   _toParams(userData) {
