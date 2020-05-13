@@ -1,5 +1,5 @@
 const toCamelCase = (string) => {
-  const split = string.split('_');
+  const split = string.split(/[-_]/);
   let camelCaseWord = split[0];
 
   for (let i = 1; i < split.length; i++) {
@@ -14,6 +14,10 @@ const toCamelCase = (string) => {
 }
 
 const toSnakeCase = (string) => {
+  if (string.includes('-')) {
+    return string.split('-').join('_');
+  }
+
   const split = string.split('');
   const charArray = [];
 
