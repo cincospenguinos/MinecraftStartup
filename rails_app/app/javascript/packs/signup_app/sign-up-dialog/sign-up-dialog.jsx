@@ -28,7 +28,7 @@ export default function SignUpDialog(props) {
         const numberOfErrors = Object.keys(response.errors).length;
 
         if (numberOfErrors === 0) {
-          props.onSave('sign-up');
+          props.onSave('signUpComplete');
         }
       });
   };
@@ -68,11 +68,10 @@ export default function SignUpDialog(props) {
 }
 
 SignUpDialog.propTypes = {
-  onSave: PropTypes.func,
+  onSave: PropTypes.func.isRequired,
   signUpInterface: PropTypes.shape({ submit: PropTypes.func.isRequired }),
 };
 
 SignUpDialog.defaultProps = {
-  onSave: () => {},
   signUpInterface: new SignUpInterface(),
 };

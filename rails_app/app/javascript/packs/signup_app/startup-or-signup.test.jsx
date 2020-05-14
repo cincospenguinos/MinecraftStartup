@@ -3,7 +3,7 @@ import { render, fireEvent, cleanup } from '@testing-library/react';
 import StartupOrSignUp from "./startup-or-signup";
 
 describe('app/javascript/packs/signup_app/startup-or-signup', () => {
-  const renderComponent = (props = {}) => render(<StartupOrSignUp />);
+  const renderComponent = (props = {}) => render(<StartupOrSignUp {...props} />);
 
   afterEach(cleanup);
 

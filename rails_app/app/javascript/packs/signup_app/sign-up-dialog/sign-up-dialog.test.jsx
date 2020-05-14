@@ -4,7 +4,8 @@ import { render, fireEvent, cleanup } from '@testing-library/react';
 import SignUpDialog from './sign-up-dialog';
 
 describe('app/javascript/packs/signup_app/sign-up-dialog', () => {
-  const renderComponent = (props = {}) => render(<SignUpDialog {...props} />);
+  const onSave = () => {};
+  const renderComponent = (props = {}) => render(<SignUpDialog onSave={onSave} {...props} />) ;
 
   afterEach(() => {
     td.reset();
@@ -45,7 +46,7 @@ describe('app/javascript/packs/signup_app/sign-up-dialog', () => {
       fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
       await fireEvent.click(getByRole('button'));
 
-      td.verify(onSave('sign-up'));
+      td.verify(onSave('signUpComplete'));
     });
 
     it('does not get called when unsuccessful', async () => {
@@ -60,7 +61,7 @@ describe('app/javascript/packs/signup_app/sign-up-dialog', () => {
       fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
       await fireEvent.click(getByRole('button'));
 
-      td.verify(onSave('sign-up'), { times: 0 });
+      td.verify(onSave('signUpComplete'), { times: 0 });
     });
   });
 });
