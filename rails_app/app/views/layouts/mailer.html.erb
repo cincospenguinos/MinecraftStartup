@@ -3,11 +3,35 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
-      /* Email styles need to be inline */
+      * {
+        font-family: sans-serif;
+      }
+
+      .message-body {
+        display: flex;
+        flex-direction: column;
+        max-width: 500px;
+      }
+
+      .message-footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .automated-message {
+        font-size: 10px;
+      }
     </style>
+    <title>[Andre's Server]</title>
   </head>
 
   <body>
     <%= yield %>
+    <div class="message-footer">
+      <span>Sincerely,</span>
+      <span>--- Andre's Server</span>
+    </div>
+    <p class="automated-message">This is an automated message from his server, but Andre will still receive whatever response you send to this email.</p>
   </body>
 </html>

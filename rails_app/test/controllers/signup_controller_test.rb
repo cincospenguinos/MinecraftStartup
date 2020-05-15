@@ -8,6 +8,13 @@ class SignupControllerTest < ActionDispatch::IntegrationTest
     assert_equal(200, response.status)
   end
 
+  test 'create sends an email with correct params' do
+    valid_params = { user: { name: 'Joe', email_address: 'foo@foo.foo', password: 'password',
+                             password_confirmation: 'password' } }
+    post '/signup', params: valid_params
+    assert_emails 2
+  end
+
   test 'create rejects incorrect params' do
     invalid_params = { user: { name: 'Joe', email_address: 'foo', password: 'password',
                              password_confirmation: 'passwordd' } }

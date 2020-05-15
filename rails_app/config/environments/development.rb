@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -30,6 +32,10 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
+
+  config.action_mailer.smtp_settings = { address: 'localhost', port: 1025 }
+
+  config.action_mailer.perform_deliveries = false
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false

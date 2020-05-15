@@ -4,6 +4,8 @@ class SignupController < ApplicationController
 
     if user.valid?
       user.save!
+      SignUpMailer.with(user: user).new_sign_up_client.deliver_now
+      SignUpMailer.with(user: user).new_sign_up_andre.deliver_now
       render json: {}
     else
       render json: { errors: user.errors }, status: :bad_request

@@ -23,4 +23,11 @@ class UserTest < ActiveSupport::TestCase
     invalid_user = User.new(name: 'Joe', password: 'heythere', password_confirmation: 'heythere')
     assert !invalid_user.valid?
   end
+
+  test 'accepted defaults to false' do
+    valid_user = User.new(name: 'Joe', email_address: 'yo@joe.com', password: 'heythere',
+                          password_confirmation: 'heythere')
+    valid_user.save!
+    assert !valid_user.accepted
+  end
 end
