@@ -13,4 +13,19 @@ class StartupRequestTest < ActiveSupport::TestCase
     request.complete!
     assert request.complete?
   end
+
+  test '#pending? returns false when none exist' do
+    assert !StartupRequest.pending?
+  end
+
+  test '#pending? returns false when the last one was completed' do
+    request = StartupRequest.create!(user: users(:one))
+    request.complete!
+    assert !StartupRequest.pending?
+  end
+
+  test '#pending? returns true when the last one is not complete' do
+    StartupRequest.create!(user: users(:one))
+    assert StartupRequest.pending?
+  end
 end
