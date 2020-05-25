@@ -7,7 +7,7 @@ class StartupController < ApplicationController
     if valid_startup_request
       render json: {}
     else
-      render json: { error: 'bad username or password' }, status: :bad_request
+      render json: { error: 'bad request' }, status: :bad_request
     end
   end
 

@@ -37,7 +37,6 @@ export default function StartupOrSignUp({ signUpInterface }) {
 
   const props = internalProps[currentDialog];
   const onSave = (nextState, opts = {}) => {
-    debugger;
     setCurrentDialog(nextState);
     setOpts(opts);
   };

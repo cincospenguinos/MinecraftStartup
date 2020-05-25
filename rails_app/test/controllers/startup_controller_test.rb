@@ -39,7 +39,7 @@ class StartupControllerTest < ActionDispatch::IntegrationTest
     user = User.create!(name: 'Joe', email_address: 'joe@joe.joe',
                  password: 'password',
                  password_confirmation: 'password')
-    user.accept_user! if accept_user
+    user.accept! if accept_user
     user
   end
 end

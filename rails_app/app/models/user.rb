@@ -4,7 +4,7 @@ class User < ApplicationRecord
   validates :email_address, uniqueness: true, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_secure_password
 
-  def accept_user!
-    update_attributes!(accepted: true)
+  def accept!
+    update!(accepted: true)
   end
 end
