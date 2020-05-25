@@ -7,10 +7,14 @@ import PropTypes from "prop-types";
 
 const internalProps = {
   startup: {
-    dialog: (onClick, _) => <StartupDialog onClick={onClick} />,
+    dialog: (onSave, _) => <StartupDialog onSave={onSave} />,
     header: 'Start the Server',
     onToggleClick: (setCurrentDialog) => setCurrentDialog('signUp'),
     toggleText: "Haven't joined?",
+  },
+  startupSuccess: {
+    dialog: (_, __) => <p>The server is starting! You will be emailed when it's done. Alternatively watch this page for status updates.</p>,
+    header: 'Success!',
   },
   signUp: {
     dialog: (onSave, { signUpInterface }) => <SignUpDialog onSave={onSave} signUpInterface={signUpInterface} />,
@@ -27,7 +31,8 @@ const internalProps = {
   signUpError: {
     dialog: (_, opts) => <ErrorInSignUp errors={opts.errors} />,
     header: 'Errors during sign up!',
-    toggleText: '',
+    onToggleClick: (setCurrentDialog) => setCurrentDialog('signUp'),
+    toggleText: 'Try Again',
   }
 };
 
