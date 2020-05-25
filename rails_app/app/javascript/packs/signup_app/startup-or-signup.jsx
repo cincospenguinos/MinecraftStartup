@@ -25,7 +25,7 @@ const internalProps = {
     toggleText: '',
   },
   signUpError: {
-    dialog: (errors) => <ErrorInSignUp errors={errors} />,
+    dialog: (_, opts) => <ErrorInSignUp errors={opts.errors} />,
     header: 'Errors during sign up!',
     toggleText: '',
   }
@@ -37,7 +37,9 @@ export default function StartupOrSignUp({ signUpInterface }) {
 
   const props = internalProps[currentDialog];
   const onSave = (nextState, opts = {}) => {
+    debugger;
     setCurrentDialog(nextState);
+    setOpts(opts);
   };
 
   return (
@@ -46,7 +48,7 @@ export default function StartupOrSignUp({ signUpInterface }) {
         <h2 className={styles.header}>{props.header}</h2>
         <a className={styles.toggle} onClick={() => props.onToggleClick(setCurrentDialog)}>{props.toggleText}</a>
       </div>
-      { props.dialog(onSave, { signUpInterface }) }
+      { props.dialog(onSave, { signUpInterface, ...opts }) }
     </div>
   );
 }

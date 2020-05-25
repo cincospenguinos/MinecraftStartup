@@ -30,7 +30,7 @@ export default function SignUpDialog(props) {
         if (numberOfErrors === 0) {
           props.onSave('signUpComplete');
         } else {
-          props.onSave('signUpError', response.errors);
+          props.onSave('signUpError', { errors: response.errors });
         }
       });
   };
