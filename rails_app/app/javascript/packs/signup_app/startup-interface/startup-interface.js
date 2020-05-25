@@ -12,7 +12,7 @@ export default class StartupInterface {
     const params = this._getParams(userData);
 
     return axios.post(StartupInterface.ENDPOINT, params, config)
-      .then(_ => { return { errors: [] } })
+      .then(_ => { return { errors: false } })
       .catch(response => this._toExpectedResponse(response));
   }
 

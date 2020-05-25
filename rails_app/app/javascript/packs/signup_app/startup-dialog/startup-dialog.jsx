@@ -2,15 +2,28 @@ import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import ValidatedInputField from "../validated-input-field/validated-input-field";
 import ActionButton from "../action-button/action-button";
+import StartupInterface from "../startup-interface/startup-interface";
 
 export default function StartupDialog(props) {
   const [isReady, setIsReady] = useState(false);
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
+  const startupInterface = new StartupInterface();
 
   useEffect(() => {
     setIsReady(!!emailAddress && !!password);
   }, [emailAddress, password]);
+
+  const submitRequest = async () => {
+    const response = await startupInterface.submit({ emailAddress, password });
+
+    if (response.errors) {
+      props.onSave('startupError', response.error);
+    } else {
+      debugger;
+      props.onSave('startupSuccess');
+    }
+  };
 
   return (
     <React.Fragment>
@@ -29,7 +42,7 @@ export default function StartupDialog(props) {
       <ActionButton
         enabled={isReady}
         label="Start"
-        onClick={() => props.onSave()}
+        onClick={submitRequest}
       />
    </React.Fragment>
   );
