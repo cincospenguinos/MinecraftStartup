@@ -30,4 +30,12 @@ class UserTest < ActiveSupport::TestCase
     valid_user.save!
     assert !valid_user.accepted
   end
+
+  test '#accept_user! accepts the user' do
+    valid_user = User.create!(name: 'Joe', email_address: 'yo@joe.com',
+                              password: 'heythere',
+                              password_confirmation: 'heythere')
+    valid_user.accept_user!
+    assert valid_user.accepted
+  end
 end
