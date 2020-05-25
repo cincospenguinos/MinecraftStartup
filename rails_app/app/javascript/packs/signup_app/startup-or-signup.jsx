@@ -16,6 +16,12 @@ const internalProps = {
     dialog: (_, __) => <p>The server is starting! You will be emailed when it's done. Alternatively watch this page for status updates.</p>,
     header: 'Success!',
   },
+  startupError: {
+    dialog: (_, __) => <p>Your credentials are bad, maybe. Or you haven't been accepted. Let Andre knows if this persists.</p>,
+    onToggleClick: setCurrentDialog => setCurrentDialog('startup'),
+    toggleText: 'Try Again',
+    header: 'Error!',
+  },
   signUp: {
     dialog: (onSave, { signUpInterface }) => <SignUpDialog onSave={onSave} signUpInterface={signUpInterface} />,
     header: 'Sign Up',

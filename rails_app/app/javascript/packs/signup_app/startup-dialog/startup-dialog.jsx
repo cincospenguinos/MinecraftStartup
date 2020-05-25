@@ -16,6 +16,7 @@ export default function StartupDialog(props) {
 
   const submitRequest = async () => {
     const response = await startupInterface.submit({ emailAddress, password });
+    debugger;
 
     if (response.errors) {
       props.onSave('startupError', response.error);

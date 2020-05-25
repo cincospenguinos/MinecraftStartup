@@ -13,7 +13,7 @@ export default class StartupInterface {
 
     return axios.post(StartupInterface.ENDPOINT, params, config)
       .then(_ => { return { errors: false } })
-      .catch(response => this._toExpectedResponse(response));
+      .catch(_ => { return { errors: true } });
   }
 
   _getParams(data) {
@@ -25,11 +25,6 @@ export default class StartupInterface {
     });
 
     return params;
-  }
-
-  _toExpectedResponse(serverResponse) {
-    const { errors } = serverResponse.response.data;
-    return { errors };
   }
 
   static setCSRFToken(token) {
