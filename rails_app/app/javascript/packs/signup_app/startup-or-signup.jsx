@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import SignUpDialog from "./sign-up-dialog/sign-up-dialog";
 import styles from "./sign-up-dialog/styles.module.css";
 import StartupDialog from "./startup-dialog/startup-dialog";
+import ErrorInSignUp from './error-in-sign-up/error-in-sign-up';
 import PropTypes from "prop-types";
-import SignUpInterface from "./sign-up-interface/sign-up-interface";
 
 const internalProps = {
   startup: {
@@ -23,13 +23,20 @@ const internalProps = {
     header: 'Sign Up Complete!',
     onToggleClick: (_) => {},
     toggleText: '',
+  },
+  signUpError: {
+    dialog: (errors) => <ErrorInSignUp errors={errors} />,
+    header: 'Errors during sign up!',
+    toggleText: '',
   }
 };
 
 export default function StartupOrSignUp({ signUpInterface }) {
   const [currentDialog, setCurrentDialog] = useState('startup');
+  const [opts, setOpts] = useState({});
+
   const props = internalProps[currentDialog];
-  const onSave = (nextState) => {
+  const onSave = (nextState, opts = {}) => {
     setCurrentDialog(nextState);
   };
 

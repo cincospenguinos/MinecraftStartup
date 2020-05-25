@@ -14,10 +14,6 @@ const toCamelCase = (string) => {
 }
 
 const toSnakeCase = (string) => {
-  if (string.includes('-')) {
-    return string.split('-').join('_');
-  }
-
   const split = string.split('');
   const charArray = [];
 
