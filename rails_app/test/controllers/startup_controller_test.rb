@@ -33,6 +33,24 @@ class StartupControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
+  test '#startup creates request when one is not pending' do
+    assert_changes 'StartupRequest.pending?' do
+      valid_user = create_valid_user
+      params = { email_address: valid_user.email_address, password: 'password' }
+      post '/startup', params: params
+    end
+  end
+
+  test '#starutp does not create a request when one is pending' do
+    valid_user = create_valid_user
+    StartupRequest.create!(user: valid_user)
+    assert_no_changes 'StartupRequest.count' do
+      params = { email_address: valid_user.email_address, password: 'password' }
+      post '/startup', params: params
+      assert_response :success
+    end
+  end
+
   private
 
   def create_valid_user(accept_user = true)

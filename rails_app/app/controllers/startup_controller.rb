@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StartupController < ApplicationController
   def index
     @csrf_token = form_authenticity_token
@@ -5,6 +7,7 @@ class StartupController < ApplicationController
 
   def startup
     if valid_startup_request
+      StartupRequest.create!(user: @user) unless StartupRequest.pending?
       render json: {}
     else
       render json: { error: 'bad request' }, status: :bad_request
@@ -13,8 +16,11 @@ class StartupController < ApplicationController
 
   private
 
+  def user
+    @user ||= User.find_by(email_address: startup_params[:email_address])
+  end
+
   def valid_startup_request
-    user = User.find_by(email_address: startup_params[:email_address])
     return false unless user&.accepted?
 
     user.authenticate(startup_params[:password])
