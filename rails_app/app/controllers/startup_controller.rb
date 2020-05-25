@@ -15,7 +15,9 @@ class StartupController < ApplicationController
 
   def valid_startup_request
     user = User.find_by(email_address: startup_params[:email_address])
-    user&.authenticate(startup_params[:password])
+    return false unless user&.accepted?
+
+    user.authenticate(startup_params[:password])
   end
 
   def startup_params

@@ -26,11 +26,20 @@ class StartupControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
+  test '#startup rejects unaccepted user' do
+    unaccepted_user = create_valid_user(false)
+    params = { email_address: unaccepted_user.email_address, password: 'password' }
+    post '/startup', params: params
+    assert_response :bad_request
+  end
+
   private
 
-  def create_valid_user
-    User.create!(name: 'Joe', email_address: 'joe@joe.joe',
+  def create_valid_user(accept_user = true)
+    user = User.create!(name: 'Joe', email_address: 'joe@joe.joe',
                  password: 'password',
                  password_confirmation: 'password')
+    user.accept_user! if accept_user
+    user
   end
 end
