@@ -20,7 +20,6 @@ export default function StartupDialog(props) {
     if (response.errors) {
       props.onSave('startupError', response.error);
     } else {
-      debugger;
       props.onSave('startupSuccess');
     }
   };
