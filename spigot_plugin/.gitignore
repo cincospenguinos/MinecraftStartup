@@ -1,3 +1,5 @@
 .idea/
 *.jar
 target/
+/dev-server/
+/dev_server
