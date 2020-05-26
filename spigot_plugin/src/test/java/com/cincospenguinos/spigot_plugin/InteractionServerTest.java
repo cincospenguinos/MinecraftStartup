@@ -53,6 +53,13 @@ public class InteractionServerTest {
         assertEquals("OK", response);
     }
 
+    @Test
+    public void serverDoesNotUnderstandGobbledigook() {
+        server.stop(); // This will prevent the thread from continuing after our test
+        String response = sendMessageToServer("GOBBLEDIGOOK");
+        assertEquals("ERROR", response);
+    }
+
     private String sendMessageToServer(String message) {
         try {
             Socket socket = new Socket("localhost", TEST_PORT);

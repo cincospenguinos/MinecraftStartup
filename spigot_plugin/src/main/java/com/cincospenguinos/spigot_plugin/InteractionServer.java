@@ -52,6 +52,8 @@ public class InteractionServer implements Runnable {
 
                 if (request.isValid()) {
                     out.println("OK");
+                } else {
+                    out.println("ERROR");
                 }
 
                 client.close();
