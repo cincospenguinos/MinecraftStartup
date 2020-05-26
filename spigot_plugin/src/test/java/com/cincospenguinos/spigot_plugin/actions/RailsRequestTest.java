@@ -15,4 +15,9 @@ public class RailsRequestTest {
     public void forMessage_garbageReturnsNullRequestObject() {
         assertNotNull(RailsRequest.forMessage("gobbledigook"));
     }
+
+    @Test
+    public void forMessage_playersReturnsPlayersRequestObject() {
+        assertTrue(RailsRequest.forMessage("players") instanceof PlayerCountRequest);
+    }
 }

@@ -1,6 +1,5 @@
 package com.cincospenguinos.spigot_plugin;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,9 +18,11 @@ public class InteractionServerTest {
 
     @Before
     public void setup() {
+        ServerInfoSource serverInfo = new MockServerInfoSource();
+
         if (!setupComplete) {
             setupComplete = true;
-            server = new InteractionServer(null, TEST_PORT);
+            server = new InteractionServer(serverInfo, TEST_PORT);
             server.start();
             rest();
         }
@@ -47,6 +48,14 @@ public class InteractionServerTest {
         assertEquals("ERROR", response);
     }
 
+    @Test
+    public void serverRespondsWithNumberOfPlayers() {
+        String response = sendMessageToServer("players");
+        assertNotNull(response);
+        int playerCount = Integer.parseInt(response);
+        assertEquals(MockServerInfoSource.NUM_PLAYERS, playerCount);
+    }
+
     private String sendMessageToServer(String message) {
         try {
             Socket socket = new Socket("localhost", TEST_PORT);
@@ -63,5 +72,14 @@ public class InteractionServerTest {
         }
 
         return null;
+    }
+
+    private static class MockServerInfoSource implements ServerInfoSource {
+        static final int NUM_PLAYERS = 3;
+
+        @Override
+        public int queryNumberPlayers() {
+            return NUM_PLAYERS;
+        }
     }
 }

@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -22,16 +21,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *    the data requested in the expected format
  */
 public class InteractionServer implements Runnable {
-    private InteractionEventListener listener;
-    private int port;
+    private final ServerInfoSource infoSource;
+    private final int port;
 
-    private AtomicBoolean keepRunning;
-    private Thread workerThread;
+    private final AtomicBoolean keepRunning;
 
     private static final long INTERVAL = 10L;
 
-    InteractionServer(InteractionEventListener _listener, int _port) {
-        listener = _listener;
+    InteractionServer(ServerInfoSource _infoSource, int _port) {
+        infoSource = _infoSource;
         port = _port;
         keepRunning = new AtomicBoolean(true);
     }
@@ -46,7 +44,7 @@ public class InteractionServer implements Runnable {
 
                 Socket client = socket.accept();
                 RailsRequest request = getRequestFrom(client);
-
+                request.process(infoSource);
                 submitResponseTo(client, request);
                 client.close();
             }
@@ -81,7 +79,6 @@ public class InteractionServer implements Runnable {
     }
 
     public void start() {
-        workerThread = new Thread(this);
-        workerThread.start();
+        new Thread(this).start();
     }
 }
