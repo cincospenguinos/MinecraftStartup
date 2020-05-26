@@ -1,14 +1,24 @@
 package com.cincospenguinos.spigot_plugin;
 
 import org.bukkit.Server;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
+    private final FileConfiguration configuration = getConfig();
     private InteractionServer interactionServer;
 
     @Override
     public void onEnable() {
-        interactionServer = new InteractionServer(this, 25566); // TODO: Make this port configuraable
+        configuration.addDefault("port", 25566);
+        configuration.options().copyDefaults(true);
+        saveConfig();
+        startServer();
+    }
+
+    private void startServer() {
+        int port = getConfig().getInt("port");
+        interactionServer = new InteractionServer(this, port);
         interactionServer.setLogger(getLogger());
         interactionServer.start();
         getLogger().info("Enabled!");
