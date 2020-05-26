@@ -46,9 +46,7 @@ public class InteractionServer implements Runnable {
                 Socket client = socket.accept();
                 RailsRequest request = getRequestFrom(client);
 
-                PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                out.println(request.response());
-
+                submitResponseTo(client, request);
                 client.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -70,6 +68,11 @@ public class InteractionServer implements Runnable {
         String message = in.readLine();
 
         return RailsRequest.forMessage(message);
+    }
+
+    private void submitResponseTo(Socket client, RailsRequest processedRequest) throws IOException {
+        PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+        out.println(processedRequest.response());
     }
 
     public void stop() {

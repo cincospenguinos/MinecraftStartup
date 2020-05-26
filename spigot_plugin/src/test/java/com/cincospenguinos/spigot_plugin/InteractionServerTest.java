@@ -21,6 +21,7 @@ public class InteractionServerTest {
         server = new InteractionServer(null, TEST_PORT);
         server.start();
         rest();
+        server.stop();
     }
 
     private void rest() {
@@ -31,31 +32,14 @@ public class InteractionServerTest {
         }
     }
 
-    @After
-    public void teardown() {
-        server.stop();
-    }
-
-    @Test
-    public void serverAcceptsConnection() {
-        try {
-            Socket socket = new Socket("localhost", TEST_PORT);
-            socket.close();
-        } catch (IOException e) {
-            fail();
-        }
-    }
-
     @Test
     public void serverUnderstandsStatus() {
-        server.stop(); // This will prevent the thread from continuing after our test
         String response = sendMessageToServer("status");
         assertEquals("OK", response);
     }
 
     @Test
     public void serverDoesNotUnderstandGobbledigook() {
-        server.stop(); // This will prevent the thread from continuing after our test
         String response = sendMessageToServer("GOBBLEDIGOOK");
         assertEquals("ERROR", response);
     }
@@ -67,7 +51,10 @@ public class InteractionServerTest {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             out.println(message);
-            return in.readLine();
+            String response = in.readLine();
+            socket.close();
+
+            return response;
         } catch (IOException e) {
             fail();
         }
