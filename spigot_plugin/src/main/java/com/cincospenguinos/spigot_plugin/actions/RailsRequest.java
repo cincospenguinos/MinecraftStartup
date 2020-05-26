@@ -20,6 +20,10 @@ public abstract class RailsRequest {
             return new PlayerCountRequest();
         }
 
+        if (message.equals("stop")) {
+            return new StopServerRequest();
+        }
+
         return new NullRequest();
     }
 

@@ -19,18 +19,14 @@ public class InteractionServerTest {
     @Before
     public void setup() {
         ServerInfoSource serverInfo = new MockServerInfoSource();
-
-        if (!setupComplete) {
-            setupComplete = true;
-            server = new InteractionServer(serverInfo, TEST_PORT);
-            server.start();
-            rest();
-        }
+        server = new InteractionServer(serverInfo, TEST_PORT);
+        server.start();
+        rest();
     }
 
     private void rest() {
         try {
-            Thread.sleep(500L);
+            Thread.sleep(90L);
         } catch (InterruptedException e) {
             fail();
         }
@@ -54,6 +50,14 @@ public class InteractionServerTest {
         assertNotNull(response);
         int playerCount = Integer.parseInt(response);
         assertEquals(MockServerInfoSource.NUM_PLAYERS, playerCount);
+    }
+
+    @Test
+    public void serverRespondsToStopRequest() {
+        String response = sendMessageToServer("stop");
+        rest();
+        assertEquals("OK", response);
+        assertFalse(server.isRunning());
     }
 
     private String sendMessageToServer(String message) {
@@ -81,5 +85,8 @@ public class InteractionServerTest {
         public int queryNumberPlayers() {
             return NUM_PLAYERS;
         }
+
+        @Override
+        public void notifyStopRequest() {}
     }
 }

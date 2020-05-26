@@ -4,4 +4,6 @@ import java.io.IOException;
 
 public interface ServerInfoSource {
     public int queryNumberPlayers();
+
+    public void notifyStopRequest();
 }

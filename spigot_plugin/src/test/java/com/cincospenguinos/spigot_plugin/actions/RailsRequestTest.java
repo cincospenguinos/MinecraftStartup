@@ -20,4 +20,9 @@ public class RailsRequestTest {
     public void forMessage_playersReturnsPlayersRequestObject() {
         assertTrue(RailsRequest.forMessage("players") instanceof PlayerCountRequest);
     }
+
+    @Test
+    public void forMessage_stopReturnsStopRequestObject() {
+        assertTrue(RailsRequest.forMessage("stop") instanceof StopServerRequest);
+    }
 }

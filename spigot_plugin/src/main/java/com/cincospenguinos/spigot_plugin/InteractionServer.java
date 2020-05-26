@@ -1,6 +1,7 @@
 package com.cincospenguinos.spigot_plugin;
 
 import com.cincospenguinos.spigot_plugin.actions.RailsRequest;
+import com.cincospenguinos.spigot_plugin.actions.StopServerRequest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,12 +46,16 @@ public class InteractionServer implements Runnable {
                 Socket client = socket.accept();
                 RailsRequest request = getRequestFrom(client);
                 request.process(infoSource);
+
+                if (request instanceof StopServerRequest) {
+                    stop();
+                }
+
                 submitResponseTo(client, request);
                 client.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
-            keepRunning.set(false);
         }
     }
 
@@ -80,5 +85,9 @@ public class InteractionServer implements Runnable {
 
     public void start() {
         new Thread(this).start();
+    }
+
+    public boolean isRunning() {
+        return keepRunning.get();
     }
 }
