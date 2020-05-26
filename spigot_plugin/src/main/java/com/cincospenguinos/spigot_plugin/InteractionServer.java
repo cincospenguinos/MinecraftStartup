@@ -1,9 +1,12 @@
 package com.cincospenguinos.spigot_plugin;
 
+import com.cincospenguinos.spigot_plugin.actions.RailsRequest;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -41,8 +44,20 @@ public class InteractionServer implements Runnable {
             try {
                 ServerSocket socket = new ServerSocket(port);
                 Socket client = socket.accept();
+                PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+                String message = in.readLine();
+                RailsRequest request = RailsRequest.forMessage(message);
+
+                if (request.isValid()) {
+                    out.println("OK");
+                }
+
+                client.close();
             } catch (IOException e) {
                 e.printStackTrace();
+                keepRunning.set(false);
             }
         }
     }
