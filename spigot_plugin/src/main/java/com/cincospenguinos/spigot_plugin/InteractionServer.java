@@ -1,7 +1,6 @@
 package com.cincospenguinos.spigot_plugin;
 
 import com.cincospenguinos.spigot_plugin.actions.RailsRequest;
-import com.cincospenguinos.spigot_plugin.actions.StopServerRequest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +9,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Logger;
 
 /**
  * The server that handles interaction between Rails's rake task to check the status of the server and the client.
@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class InteractionServer implements Runnable {
     private final ServerInfoSource infoSource;
     private final int port;
+    private Logger logger;
 
     private final AtomicBoolean keepRunning;
 
@@ -45,17 +46,14 @@ public class InteractionServer implements Runnable {
 
                 Socket client = socket.accept();
                 RailsRequest request = getRequestFrom(client);
+                logInfo("Got a request! " + request);
                 request.process(infoSource);
-
-                if (request instanceof StopServerRequest) {
-                    stop();
-                }
-
                 submitResponseTo(client, request);
                 client.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
+            logInfo("Server crapped out");
         }
     }
 
@@ -79,6 +77,12 @@ public class InteractionServer implements Runnable {
         out.println(processedRequest.response());
     }
 
+    private void logInfo(String message) {
+        if (logger != null) {
+            logger.info(message);
+        }
+    }
+
     public void stop() {
         keepRunning.set(false);
     }
@@ -87,7 +91,7 @@ public class InteractionServer implements Runnable {
         new Thread(this).start();
     }
 
-    public boolean isRunning() {
-        return keepRunning.get();
+    public void setLogger(Logger _logger) {
+        logger = _logger;
     }
 }

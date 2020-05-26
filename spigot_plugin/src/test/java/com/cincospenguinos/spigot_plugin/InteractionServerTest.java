@@ -57,7 +57,6 @@ public class InteractionServerTest {
         String response = sendMessageToServer("stop");
         rest();
         assertEquals("OK", response);
-        assertFalse(server.isRunning());
     }
 
     private String sendMessageToServer(String message) {
