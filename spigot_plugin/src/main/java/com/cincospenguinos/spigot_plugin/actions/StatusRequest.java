@@ -7,4 +7,9 @@ public class StatusRequest extends RailsRequest {
     public boolean isValid() {
         return true;
     }
+
+    @Override
+    public String response() {
+        return "OK";
+    }
 }

@@ -47,11 +47,7 @@ public class InteractionServer implements Runnable {
                 RailsRequest request = getRequestFrom(client);
 
                 PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                if (request.isValid()) {
-                    out.println("OK");
-                } else {
-                    out.println("ERROR");
-                }
+                out.println(request.response());
 
                 client.close();
             } catch (IOException e) {
