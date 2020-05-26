@@ -38,20 +38,21 @@ public class InteractionServer implements Runnable {
 
     @Override
     public void run() {
-        while (keepRunning.get()) {
-            rest();
+        try {
+            ServerSocket socket = new ServerSocket(port);
 
-            try {
-                ServerSocket socket = new ServerSocket(port);
+            while (keepRunning.get()) {
+                rest();
+
                 Socket client = socket.accept();
                 RailsRequest request = getRequestFrom(client);
 
                 submitResponseTo(client, request);
                 client.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                keepRunning.set(false);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+            keepRunning.set(false);
         }
     }
 

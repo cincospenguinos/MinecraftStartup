@@ -15,13 +15,16 @@ import static org.junit.Assert.*;
 public class InteractionServerTest {
     private InteractionServer server;
     private static final int TEST_PORT = 25567;
+    private boolean setupComplete = false;
 
     @Before
     public void setup() {
-        server = new InteractionServer(null, TEST_PORT);
-        server.start();
-        rest();
-        server.stop();
+        if (!setupComplete) {
+            setupComplete = true;
+            server = new InteractionServer(null, TEST_PORT);
+            server.start();
+            rest();
+        }
     }
 
     private void rest() {
