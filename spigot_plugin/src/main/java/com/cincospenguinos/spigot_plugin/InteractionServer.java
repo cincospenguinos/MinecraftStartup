@@ -44,12 +44,9 @@ public class InteractionServer implements Runnable {
             try {
                 ServerSocket socket = new ServerSocket(port);
                 Socket client = socket.accept();
+                RailsRequest request = getRequestFrom(client);
+
                 PrintWriter out = new PrintWriter(client.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-                String message = in.readLine();
-                RailsRequest request = RailsRequest.forMessage(message);
-
                 if (request.isValid()) {
                     out.println("OK");
                 } else {
@@ -70,6 +67,13 @@ public class InteractionServer implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private RailsRequest getRequestFrom(Socket client) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        String message = in.readLine();
+
+        return RailsRequest.forMessage(message);
     }
 
     public void stop() {
