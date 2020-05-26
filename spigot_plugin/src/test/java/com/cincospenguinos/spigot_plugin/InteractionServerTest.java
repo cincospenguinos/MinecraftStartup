@@ -11,11 +11,13 @@ import static org.junit.Assert.*;
 
 public class InteractionServerTest {
     private InteractionServer server;
+    private static final int TEST_PORT = 25567;
 
     @Before
     public void setup() {
-        server = new InteractionServer(null, 25566);
+        server = new InteractionServer(null, TEST_PORT);
         server.start();
+        rest();
     }
 
     @After
@@ -26,9 +28,16 @@ public class InteractionServerTest {
     @Test
     public void serverAcceptsConnection() {
         try {
+            new Socket("localhost", TEST_PORT);
+        } catch (IOException e) {
+            fail();
+        }
+    }
+
+    private void rest() {
+        try {
             Thread.sleep(100L);
-            new Socket("localhost", 25566);
-        } catch (IOException | InterruptedException e) {
+        } catch (InterruptedException e) {
             fail();
         }
     }
