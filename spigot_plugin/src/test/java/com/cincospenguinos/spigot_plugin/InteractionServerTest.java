@@ -23,6 +23,14 @@ public class InteractionServerTest {
         rest();
     }
 
+    private void rest() {
+        try {
+            Thread.sleep(500L);
+        } catch (InterruptedException e) {
+            fail();
+        }
+    }
+
     @After
     public void teardown() {
         server.stop();
@@ -41,25 +49,22 @@ public class InteractionServerTest {
     @Test
     public void serverUnderstandsStatus() {
         server.stop(); // This will prevent the thread from continuing after our test
+        String response = sendMessageToServer("status");
+        assertEquals("OK", response);
+    }
 
+    private String sendMessageToServer(String message) {
         try {
             Socket socket = new Socket("localhost", TEST_PORT);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            out.println("status");
-            String response = in.readLine();
-            assertEquals("OK", response);
+            out.println(message);
+            return in.readLine();
         } catch (IOException e) {
             fail();
         }
-    }
 
-    private void rest() {
-        try {
-            Thread.sleep(500L);
-        } catch (InterruptedException e) {
-            fail();
-        }
+        return null;
     }
 }
