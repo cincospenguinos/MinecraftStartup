@@ -10,10 +10,9 @@ class StatusController < ApplicationController
   private
 
   def reported_status
-    has_pending_request = StartupRequest.pending?
     spigot_status = spigot_interface.status
-
-    return :pending if has_pending_request && spigot_status == :offline
+    return :online if spigot_status == :online
+    return :pending if StartupRequest.pending? && spigot_status == :offline
 
     :offline
   end
