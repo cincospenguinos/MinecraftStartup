@@ -9,7 +9,10 @@ module Spigot
     end
 
     def status
-      submit_command('status') || :offline
+      response = submit_command('status')
+      return :online unless response.nil?
+
+      :offline
     end
 
     private

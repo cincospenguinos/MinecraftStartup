@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const App = () => <div>Hello, world!</div>;
+import StatusApp from './status_app/status-app';
 
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('status-container');
-  ReactDOM.render(<App />, container);
+  ReactDOM.render(<StatusApp />, container);
 });
