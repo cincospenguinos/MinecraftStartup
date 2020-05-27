@@ -13,12 +13,4 @@ I don't know! I haven't figured that out yet.
 
 ## Can I clone it and use it?
 
-Sure! Feel free to modify it to your heart's content. If you have bugfixes, I'd really appreciate if you submit a PR, but otherwise it's available for free use.
-
-## MVP
-
-- [x] I can sign up on the server
-- [x] I can start the server with my info
-- [x] Andre can accept my sign up request, and I am informed via email
-- [x] Andre can reject my sign up request, and I am informed via email
-- [ ] I can see when the server is running
+Sure! Feel free to modify it to your heart's content. If you have bugfixes I'd really appreciate if you submit a PR, but otherwise it's available for free use.

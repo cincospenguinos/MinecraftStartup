@@ -13,7 +13,7 @@ const internalProps = {
     toggleText: "Haven't joined?",
   },
   startupSuccess: {
-    dialog: (_, __) => <p>The server is starting! You will be emailed when it's done. Alternatively watch this page for status updates.</p>,
+    dialog: (_, __) => <p>The server is starting! Watch this page for status updates.</p>,
     header: 'Success!',
   },
   startupError: {
