@@ -17,3 +17,9 @@
 * {
     font-family: Arial, sans-serif;
 }
+
+#status-container {
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: smaller;
+}
