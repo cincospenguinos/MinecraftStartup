@@ -18,6 +18,9 @@ class StatusControllerTest < ActionDispatch::IntegrationTest
   test '#status responds with "pending" when offline and request pending' do
     mock_interface(:offline)
     StartupRequest.create!(user: users(:one))
+    get '/status'
+    json_body = JSON.parse(response.body)
+    assert_equal 'pending', json_body['status']
   end
 
   def mock_interface(status_response)

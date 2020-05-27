@@ -19,7 +19,7 @@ module Spigot
       socket.print(cmd + "\n")
       response = socket.gets.chomp
       socket.close
-      response
+      response.downcase.to_sym
     rescue Errno::ECONNREFUSED
       nil
     end
