@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>RailsApp</title>
     <%= csrf_meta_tags %>
@@ -10,8 +10,8 @@
   </head>
 
   <body>
+    <%= yield %>
     <div id="status-container"></div>
     <%= javascript_pack_tag 'status_app' %>
-    <%= yield %>
   </body>
 </html>

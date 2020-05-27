@@ -1,0 +1,45 @@
+:root {
+    --color-status-error: #FFAAAA;
+    --color-status-error-border: #FF0202;
+    --color-status-offline: #CCCCCC;
+    --color-status-offline-border: #444444;
+    --color-status-pending: #ffc15c;
+    --color-status-pending-border: #cd9d49;
+    --color-status-online: #44FF44;
+    --color-status-online-border: #02FF02;
+}
+
+.container {
+    font-size: smaller;
+}
+
+.notification-space {
+    border: 1px solid;
+    border-radius: 2px;
+    padding: 4px;
+    font-size: smaller;
+}
+
+.error {
+    composes: notification-space;
+    border-color: var(--color-status-error-border);
+    background-color: var(--color-status-error);
+}
+
+.offline {
+    composes: notification-space;
+    border-color: var(--color-status-offline-border);
+    background-color: var(--color-status-offline);
+}
+
+.pending {
+    composes: notification-space;
+    border-color: var(--color-status-pending-border);
+    background-color: var(--color-status-pending);
+}
+
+.online {
+    composes: notification-space;
+    border-color: var(--color-status-online-border);
+    background-color: var(--color-status-online);
+}
