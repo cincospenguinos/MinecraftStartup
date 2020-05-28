@@ -15,6 +15,15 @@ module Spigot
       :offline
     end
 
+    def count_current_players
+      response = submit_command('players')
+      response.to_s.to_i || :error
+    end
+
+    def stop
+      submit_command('stop')
+    end
+
     private
 
     def submit_command(cmd)

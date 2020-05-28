@@ -3,10 +3,8 @@
 require 'spigot/spigot_interface'
 
 namespace :minecraft do
-
   desc 'start the server in the directory provided'
   task :start, [:path] => :environment do |_, args|
-    puts ENV['RAILS_ENV']
     status = ::Spigot::SpigotInterface.new(25_566).status
 
     if StartupRequest.pending? && status == :offline
@@ -14,5 +12,24 @@ namespace :minecraft do
       Dir.chdir(args[:path]) { `screen -dmS minecraft java -jar spigot.jar nogui` }
       request.complete!
     end
+  end
+
+  desc 'stop the server if it is time'
+  task stop: :environment do
+    interface = ::Spigot::SpigotInterface.new(25_566)
+    status = interface.status
+    return unless status == :online
+
+    interface.stop if !in_time_provision && no_players?(interface)
+  end
+
+  def in_time_provision
+    last_request_time = StartupRequest.last.updated_at
+    minutes = (Time.now - last_request_time) / 60
+    minutes <= 10
+  end
+
+  def no_players?(interface)
+    interface.count_current_players.zero?
   end
 end
