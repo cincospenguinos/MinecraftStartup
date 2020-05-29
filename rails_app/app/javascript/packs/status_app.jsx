@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StatusApp from './status_app/status-app';
+import StatusApp from '../components/status_app/status-app';
 
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('status-container');
