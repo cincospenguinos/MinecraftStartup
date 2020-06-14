@@ -14,7 +14,8 @@ namespace :minecraft do
     request = StartupRequest.last
 
     Dir.chdir(ENV['MINECRAFT_SERVER_PATH']) do
-      pid = Process.spawn("screen -L -dmS minecraft java -jar #{ENV['MINECRAFT_JAR_PATH']} #{ENV['MINECRAFT_SERVER_ARGS']}")
+      startup_cmd = "screen -L -dmS minecraft java -jar #{ENV['MINECRAFT_JAR_PATH']} #{ENV['MINECRAFT_SERVER_ARGS']}"
+      pid = Process.spawn(startup_cmd)
       Process.detach(pid)
     end
 
