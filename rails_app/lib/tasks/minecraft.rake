@@ -7,16 +7,18 @@ namespace :minecraft do
   task :start, [:path] => :environment do |_, args|
     status = ::Spigot::SpigotInterface.new(25_566).status
 
-    if StartupRequest.pending? && status == :offline
-      request = StartupRequest.last
+    start_server if StartupRequest.pending? && status == :offline
+  end
 
-      Dir.chdir(ENV['MINECRAFT_SERVER_PATH']) do
-        pid = Process.spawn("screen -L -dmS minecraft java -jar #{ENV['MINECRAFT_JAR_PATH']} #{ENV['MINECRAFT_SERVER_ARGS']}")
-        Process.detach(pid)
-      end
+  def start_server
+    request = StartupRequest.last
 
-      request.complete!
+    Dir.chdir(ENV['MINECRAFT_SERVER_PATH']) do
+      pid = Process.spawn("screen -L -dmS minecraft java -jar #{ENV['MINECRAFT_JAR_PATH']} #{ENV['MINECRAFT_SERVER_ARGS']}")
+      Process.detach(pid)
     end
+
+    request.complete!
   end
 
   desc 'stop the server if it is time'
