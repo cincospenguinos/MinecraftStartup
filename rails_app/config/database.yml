@@ -22,5 +22,5 @@ test:
 
 production:
   <<: *default
-  adapter: mysql
+  adapter: mysql2
   database: mc_startup
