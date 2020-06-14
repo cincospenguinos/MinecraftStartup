@@ -9,7 +9,12 @@ namespace :minecraft do
 
     if StartupRequest.pending? && status == :offline
       request = StartupRequest.last
-      Dir.chdir(args[:path]) { `screen -dmS minecraft java -jar spigot.jar nogui` }
+
+      Dir.chdir(ENV['MINECRAFT_SERVER_PATH']) do
+        pid = Process.spawn("screen -L -dmS minecraft java -jar #{ENV['MINECRAFT_JAR_PATH']} #{ENV['MINECRAFT_SERVER_ARGS']}")
+        Process.detach(pid)
+      end
+
       request.complete!
     end
   end
