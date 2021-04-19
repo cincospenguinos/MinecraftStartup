@@ -3,8 +3,6 @@
 <h1>Welcome</h1>
 <p>This is Andre's Minecraft Server.</p>
 
-<% if Rails.env.production? %>
-  <%= stylesheet_pack_tag 'signup_app' %>
-  <%= stylesheet_pack_tag 'status_app' %>
-<% end %>
 <%= javascript_pack_tag 'signup_app' %>
+<div id="status-container"></div>
+<%= javascript_pack_tag 'status_app' %>

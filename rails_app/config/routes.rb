@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   post '/signup', to: 'signup#create'
   post '/startup', to: 'startup#startup'
   get '/status', to: 'status#status'
+  get '/maps', to: 'maps#index'
 end
