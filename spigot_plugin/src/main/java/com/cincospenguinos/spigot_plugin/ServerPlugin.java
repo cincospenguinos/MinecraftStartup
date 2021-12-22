@@ -1,17 +1,17 @@
 package com.cincospenguinos.spigot_plugin;
 
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
+import com.cincospenguinos.spigot_plugin.discord.DiscordBot;
 import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.security.auth.login.LoginException;
+// TODO: Add minecart chunk loading behavior as well
 
 public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
     public static final int SERVER_PLUGIN_PORT = 25566;
     private final FileConfiguration configuration = getConfig();
     private InteractionServer interactionServer;
+    private DiscordBot bot;
 
     @Override
     public void onEnable() {
@@ -20,16 +20,16 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
         saveConfig();
 
         String botToken = configuration.getString("discord_bot_token");
+        String channelName = configuration.getString("discord_channel_id");
 
-        if (botToken == null) {
-            getLogger().info("No discord bot token provided! Will not be able to integrate with Discord!");
+        if (botToken == null || channelName == null) {
+            getLogger().warning("No discord bot token provided! Will not be able to integrate with Discord!");
         } else {
-            try {
-                JDABuilder.createDefault(botToken).build();
-                getLogger().info("Created bot connection");
-            } catch (LoginException e) {
-                e.printStackTrace();
-                getLogger().info("Could not login as bot!");
+            bot = new DiscordBot(botToken, channelName);
+            if (bot.login()) {
+                bot.sendMessage("@everyone The server is up! Come on in and join the fun!");
+            } else {
+                getLogger().warning("Could not login as Discord bot!");
             }
         }
 
@@ -41,12 +41,13 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
         interactionServer = new InteractionServer(this, port);
         interactionServer.setLogger(getLogger());
         interactionServer.start();
-        getLogger().info("Enabled!");
+        getLogger().info("Interaction server is up");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("Disabled!");
+        interactionServer.stop();
+        getLogger().info("Interaction server stopped");
     }
 
     @Override
