@@ -18,7 +18,12 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
         configuration.addDefault("port", SERVER_PLUGIN_PORT);
         configuration.options().copyDefaults(true);
         saveConfig();
+        notifyDiscord();
+        setupExtractEnchantmentCommand();
+        startServer();
+    }
 
+    private void notifyDiscord() {
         String botToken = configuration.getString("discord_bot_token");
         String channelName = configuration.getString("discord_channel_id");
 
@@ -32,8 +37,10 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
                 getLogger().warning("Could not login as Discord bot!");
             }
         }
+    }
 
-        startServer();
+    private void setupExtractEnchantmentCommand() {
+        this.getCommand("extract_enchantments").setExecutor(new ExtractEnchantmentCommand(getLogger()));
     }
 
     private void startServer() {
