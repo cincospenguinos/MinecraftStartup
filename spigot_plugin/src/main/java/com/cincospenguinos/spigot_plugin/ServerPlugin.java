@@ -1,9 +1,22 @@
 package com.cincospenguinos.spigot_plugin;
 
 import com.cincospenguinos.spigot_plugin.discord.DiscordBot;
+import org.bukkit.Chunk;
 import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.minecart.StorageMinecart;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPlaceEvent;
+import org.bukkit.event.world.EntitiesLoadEvent;
+import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
 
 // TODO: Add minecart chunk loading behavior as well
 
@@ -12,6 +25,37 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
     private final FileConfiguration configuration = getConfig();
     private InteractionServer interactionServer;
     private DiscordBot bot;
+
+    public class MinecartShippingListener implements Listener {
+        @EventHandler
+        public void onEntitiesUnloadEvent(EntitiesUnloadEvent event) {
+            for (Entity e : event.getEntities()) {
+                if (e instanceof StorageMinecart) {
+                    getLogger().info(">>> Cart was unloaded!");
+                    getServer().getPlayer("cincospenguinos").sendMessage(">>> Cart was unloaded!");
+                }
+            }
+        }
+
+        @EventHandler
+        public void onStorageCartLoadEvent(EntitiesLoadEvent event) {
+            for (Entity e : event.getEntities()) {
+                if (e instanceof StorageMinecart) {
+                    getLogger().info(">>> Cart was loaded!");
+                    getServer().getPlayer("cincospenguinos").sendMessage(">>> Cart was placed!");
+                }
+            }
+        }
+
+        @EventHandler
+        public void onEntityPlacedEvent(EntityPlaceEvent event) {
+            Entity e = event.getEntity();
+            if (e instanceof StorageMinecart) {
+                getLogger().info(">>> Cart was placed!");
+                getServer().getPlayer("cincospenguinos").sendMessage(">>> Cart was placed!");
+            }
+        }
+    }
 
     @Override
     public void onEnable() {
@@ -34,6 +78,8 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
         }
 
         startServer();
+
+        getServer().getPluginManager().registerEvents(new MinecartShippingListener(), this);
     }
 
     private void startServer() {
