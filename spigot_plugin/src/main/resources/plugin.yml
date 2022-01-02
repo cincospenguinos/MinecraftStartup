@@ -1,7 +1,7 @@
 ---
 name: AndreServerPlugin
 main: com.cincospenguinos.spigot_plugin.ServerPlugin
-version: 0.1.1
+version: 0.1.2
 commands:
   extract_enchantments:
     description: Extract enchantments from an item

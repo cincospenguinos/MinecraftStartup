@@ -11,6 +11,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -61,7 +63,10 @@ public class ExtractEnchantmentCommand implements CommandExecutor {
 
                     for (Map.Entry<Enchantment, Integer> enchantmentEntry : entrySet) {
                         ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
-                        enchantedBook.addUnsafeEnchantment(enchantmentEntry.getKey(), enchantmentEntry.getValue());
+                        assert enchantedBook.getItemMeta() != null;
+                        EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
+                        meta.addStoredEnchant(enchantmentEntry.getKey(), enchantmentEntry.getValue(), true);
+                        enchantedBook.setItemMeta(meta);
                         location.getWorld().dropItem(dropLocation, enchantedBook);
                     }
 
