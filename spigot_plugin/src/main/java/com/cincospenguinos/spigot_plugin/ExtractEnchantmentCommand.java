@@ -65,7 +65,7 @@ public class ExtractEnchantmentCommand implements CommandExecutor {
                         ItemStack enchantedBook = new ItemStack(Material.ENCHANTED_BOOK);
                         assert enchantedBook.getItemMeta() != null;
                         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) enchantedBook.getItemMeta();
-                        meta.addStoredEnchant(enchantmentEntry.getKey(), enchantmentEntry.getValue(), true);1:x
+                        meta.addStoredEnchant(enchantmentEntry.getKey(), enchantmentEntry.getValue(), true);
 
                         enchantedBook.setItemMeta(meta);
                         location.getWorld().dropItem(dropLocation, enchantedBook);
