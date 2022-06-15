@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import styles from './styles.module.css';
 
 export default function ValidatedCheckbox(props) {
 	const [isChecked, setIsChecked] = useState(props.value);
@@ -11,14 +12,15 @@ export default function ValidatedCheckbox(props) {
 	}
 
 	return (
-		<div>
-			<label htmlFor={props.id}>{props.label}</label>
+		<div className={styles.container}>
 			<input
+				className={styles.input}
 				id={props.id}
 				type="checkbox"
 				checked={isChecked}
 				onChange={onChange}
 			/>
+			<label className={styles.label} htmlFor={props.id}>{props.label}</label>
 		</div>
 	);
 }

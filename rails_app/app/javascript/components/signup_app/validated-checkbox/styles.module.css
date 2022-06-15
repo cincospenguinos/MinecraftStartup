@@ -1,0 +1,14 @@
+.container {
+	margin: 4px 0;
+}
+
+.input {
+    border-radius: 3px;
+    border: 1px solid var(--color-neutral);
+    /*padding: 8px;*/
+    /*font-size: small;*/
+}
+
+.label {
+    margin-bottom: 4px;
+}
