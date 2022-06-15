@@ -20,13 +20,15 @@ describe('app/javascript/packs/signup_app/startup-dialog/startup-dialog', () => 
     expect(getByRole('button').getAttribute('disabled')).not.toBe('');
   });
 
-  it('accepts an onSave listener', () => {
+  it('accepts an onSave listener', async () => {
     const onSave = td.func();
-    const { getByLabelText, getByRole } = renderComponent({ onSave });
+    const { getByLabelText, getByRole } = renderComponent({ onSave, startupInterface: null });
+
     fireEvent.change(getByLabelText('Email Address'), { target: { value: 'foo@foo.foo' }});
     fireEvent.change(getByLabelText('Password'), { target: { value: 'password' } });
-    fireEvent.click(getByRole('button'));
+    expect(getByRole('button').getAttribute('disabled')).toBe(null);
 
-    td.verify(onSave());
+    await fireEvent.click(getByRole('button'));
+    td.verify(onSave('startupSuccess'));
   });
 });

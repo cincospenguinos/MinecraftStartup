@@ -61,7 +61,7 @@ describe('app/javascript/packs/signup_app/sign-up-dialog', () => {
       fireEvent.change(getByLabelText('Confirm Password'), { target: { value: 'password' }});
       await fireEvent.click(getByRole('button'));
 
-      td.verify(onSave('signUpError', { password: ['password is not cool enough'] } ));
+      td.verify(onSave('signUpError', { errors: { password: ['password is not cool enough'] } }));
     });
   });
 });

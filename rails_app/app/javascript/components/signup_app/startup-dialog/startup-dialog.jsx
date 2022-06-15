@@ -8,21 +8,23 @@ export default function StartupDialog(props) {
   const [isReady, setIsReady] = useState(false);
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
-  const startupInterface = new StartupInterface();
+  const startupInterface = props.startupInterface;
 
   useEffect(() => {
     setIsReady(!!emailAddress && !!password);
   }, [emailAddress, password]);
 
   const submitRequest = async () => {
-    const response = await startupInterface.submit({ emailAddress, password });
-    debugger;
+    if (props.startupInterface) {
+      const response = await startupInterface.submit({ emailAddress, password });
 
-    if (response.errors) {
-      props.onSave('startupError', response.error);
-    } else {
-      props.onSave('startupSuccess');
+      if (response.errors) {
+        props.onSave('startupError', response.error);
+        return;
+      }
     }
+
+    props.onSave('startupSuccess');  
   };
 
   return (
@@ -50,8 +52,10 @@ export default function StartupDialog(props) {
 
 StartupDialog.propTypes = {
   onSave: PropTypes.func,
+  startupInterface: PropTypes.object,
 };
 
 StartupDialog.defaultProps = {
   onSave: () => {},
+  startupInterface: new StartupInterface(),
 };
