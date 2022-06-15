@@ -7,7 +7,7 @@ class StartupController < ApplicationController
 
   def startup
     if valid_startup_request
-      StartupRequest.create!(user: @user) unless StartupRequest.pending?
+      StartupRequest.create!(user: @user, notify: startup_params[:notify]) unless StartupRequest.pending?
       render json: {}
     else
       render json: { error: 'bad request' }, status: :bad_request
@@ -27,6 +27,6 @@ class StartupController < ApplicationController
   end
 
   def startup_params
-    params.permit(:email_address, :password)
+    params.permit(:email_address, :password, :notify)
   end
 end

@@ -8,27 +8,27 @@ class StartupControllerTest < ActionDispatch::IntegrationTest
 
   test '#startup accepts valid email address and password' do
     valid_user = create_valid_user
-    params = { email_address: valid_user.email_address, password: 'password' }
+    params = { email_address: valid_user.email_address, password: 'password', notify: false }
     post '/startup', params: params
     assert_response :success
   end
 
   test '#startup rejects invalid email address' do
-    params = { email_address: 'notreal@email.net', password: 'password' }
+    params = { email_address: 'notreal@email.net', password: 'password', notify: false }
     post '/startup', params: params
     assert_response :bad_request
   end
 
   test '#startup rejects invalid password' do
     valid_user = create_valid_user
-    params = { email_address: valid_user.email_address, password: 'notthepassword' }
+    params = { email_address: valid_user.email_address, password: 'notthepassword', notify: false }
     post '/startup', params: params
     assert_response :bad_request
   end
 
   test '#startup rejects unaccepted user' do
     unaccepted_user = create_valid_user(false)
-    params = { email_address: unaccepted_user.email_address, password: 'password' }
+    params = { email_address: unaccepted_user.email_address, password: 'password', notify: false }
     post '/startup', params: params
     assert_response :bad_request
   end
@@ -36,19 +36,27 @@ class StartupControllerTest < ActionDispatch::IntegrationTest
   test '#startup creates request when one is not pending' do
     assert_changes 'StartupRequest.pending?' do
       valid_user = create_valid_user
-      params = { email_address: valid_user.email_address, password: 'password' }
+      params = { email_address: valid_user.email_address, password: 'password', notify: false }
       post '/startup', params: params
     end
   end
 
-  test '#starutp does not create a request when one is pending' do
+  test '#startup does not create a request when one is pending' do
     valid_user = create_valid_user
     StartupRequest.create!(user: valid_user)
     assert_no_changes 'StartupRequest.count' do
-      params = { email_address: valid_user.email_address, password: 'password' }
+      params = { email_address: valid_user.email_address, password: 'password', notify: false }
       post '/startup', params: params
       assert_response :success
     end
+  end
+
+  test '#startup sets notify field' do
+    valid_user = create_valid_user
+    params = { email_address: valid_user.email_address, password: 'password', notify: true }
+    post '/startup', params: params
+    assert_response :success
+    assert StartupRequest.last.notify?
   end
 
   private
