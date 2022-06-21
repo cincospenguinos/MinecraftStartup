@@ -24,6 +24,10 @@ public abstract class RailsRequest {
             return new StopServerRequest();
         }
 
+        if (message.equals("notify")) {
+            return new DiscordNotifyRequest();
+        }
+
         return new NullRequest();
     }
 

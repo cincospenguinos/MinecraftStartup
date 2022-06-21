@@ -25,4 +25,9 @@ public class RailsRequestTest {
     public void forMessage_stopReturnsStopRequestObject() {
         assertTrue(RailsRequest.forMessage("stop") instanceof StopServerRequest);
     }
+
+    @Test
+    public void forMessage_notifyReturnsNotifyRequestObject() {
+        assertTrue(RailsRequest.forMessage("notify") instanceof DiscordNotifyRequest);
+    }
 }

@@ -14,7 +14,6 @@ import static org.junit.Assert.*;
 public class InteractionServerTest {
     private InteractionServer server;
     private static final int TEST_PORT = 25567;
-    private boolean setupComplete = false;
 
     @Before
     public void setup() {
@@ -87,5 +86,8 @@ public class InteractionServerTest {
 
         @Override
         public void notifyStopRequest() {}
+
+        @Override
+        public void notifyDiscordRequest() {}
     }
 }

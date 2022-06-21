@@ -18,25 +18,8 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
         configuration.addDefault("port", SERVER_PLUGIN_PORT);
         configuration.options().copyDefaults(true);
         saveConfig();
-        notifyDiscord();
         setupExtractEnchantmentCommand();
         startServer();
-    }
-
-    private void notifyDiscord() {
-        String botToken = configuration.getString("discord_bot_token");
-        String channelName = configuration.getString("discord_channel_id");
-
-        if (botToken == null || channelName == null) {
-            getLogger().warning("No discord bot token provided! Will not be able to integrate with Discord!");
-        } else {
-            bot = new DiscordBot(botToken, channelName);
-            if (bot.login()) {
-                bot.sendMessage("@everyone The server is up! Come on in and join the fun!");
-            } else {
-                getLogger().warning("Could not login as Discord bot!");
-            }
-        }
     }
 
     private void setupExtractEnchantmentCommand() {
@@ -69,5 +52,22 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
         server.shutdown();
 
         interactionServer.stop();
+    }
+
+    @Override
+    public void notifyDiscordRequest() {
+        String botToken = configuration.getString("discord_bot_token");
+        String channelName = configuration.getString("discord_channel_id");
+
+        if (botToken == null || channelName == null) {
+            getLogger().warning("No discord bot token provided! Will not be able to integrate with Discord!");
+        } else {
+            bot = new DiscordBot(botToken, channelName);
+            if (bot.login()) {
+                bot.sendMessage("@everyone The server is up! Come on in and join the fun!");
+            } else {
+                getLogger().warning("Could not login as Discord bot!");
+            }
+        }
     }
 }
