@@ -24,6 +24,10 @@ module Spigot
       submit_command('stop')
     end
 
+    def notify
+      submit_command('notify')
+    end
+
     private
 
     def submit_command(cmd)
