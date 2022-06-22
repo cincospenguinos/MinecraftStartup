@@ -9,7 +9,11 @@ namespace :minecraft do
     status = spigot.status
 
     handle_server_request if StartupRequest.pending? && status == :offline
-    Process.fork { wait_and_notify } if StartupRequest.last.notify?
+
+    if StartupRequest.last.notify?
+      child = Process.fork { wait_and_notify }
+      Process.detach(child)
+    end
   end
 
   def handle_server_request
