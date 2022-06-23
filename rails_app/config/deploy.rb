@@ -1,5 +1,5 @@
 # config valid for current version and patch releases of Capistrano
-lock "~> 3.14.0"
+lock "~> 3.17.0"
 
 set :application, "rails_app"
 set :repo_url, "git@github.com:cincospenguinos/MinecraftStartup.git"
