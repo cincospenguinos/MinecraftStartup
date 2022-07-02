@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  rails_app:
+    build: rails_app/
+    ports:
+      - "80:80"
+  # minecraft:
+  #   build: spigot_plugin/
+  #   ports:
+  #     - "25585:25565"
+  #     - "25566:25566"

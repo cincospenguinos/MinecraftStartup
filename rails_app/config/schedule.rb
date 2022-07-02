@@ -1,3 +1,5 @@
+env :PATH, ENV['PATH']
+
 every 1.minutes do
 	rake 'minecraft:start'
 end
