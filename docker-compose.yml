@@ -4,8 +4,8 @@ services:
     build: rails_app/
     ports:
       - "80:80"
-  # minecraft:
-  #   build: spigot_plugin/
-  #   ports:
-  #     - "25585:25565"
-  #     - "25566:25566"
+  minecraft:
+    build: spigot_plugin/
+    ports:
+      - "25565:25565"
+      - "25566:25566"
