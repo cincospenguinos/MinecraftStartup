@@ -5,7 +5,7 @@ services:
     ports:
       - "80:80"
   minecraft:
-    build: spigot_plugin/
+    build: minecraft/
     ports:
       - "25565:25565"
       - "25566:25566"
