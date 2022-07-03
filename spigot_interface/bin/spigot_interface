@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require 'thor'
+require 'spigot_interface'
+
+unless ENV.keys.include?('SPIGOT_HOST_NAME') && ENV.keys.include?('SPIGOT_PORT')
+  puts 'Both SPIGOT_HOST_NAME and SPIGOT_PORT must be defined in the environment'
+  exit 1
+end
+
+class SpigotInterfaceCLI < Thor
+  desc 'serve PORT', 'Spins up the interaction server on the port provided'
+  def serve(port)
+    server = SpigotInterface::Server.new(port)
+    loop { server.handle }
+  end
+
+  desc 'submit COMMAND HOST PORT', 'Submit a command to the interaction server given host and port'
+  def submit(command, host, port)
+    client = SpigotInterface::Client.new(host, port)
+    puts client.submit_command(command)
+  end
+end
+
+SpigotInterfaceCLI.start(ARGV)

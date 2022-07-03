@@ -1,0 +1,9 @@
+module SpigotInterface
+  VERSION: String
+  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+  
+  class SpigotConnection
+    def initialize: () -> void
+    def submit_command: (command: String) -> String
+  end
+end

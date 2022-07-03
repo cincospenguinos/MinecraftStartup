@@ -1,0 +1,25 @@
+PATH
+  remote: .
+  specs:
+    spigot_interface (0.1.0)
+      thor (~> 1.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    power_assert (2.0.1)
+    rake (13.0.6)
+    test-unit (3.5.3)
+      power_assert
+    thor (1.2.1)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  rake (~> 13.0)
+  spigot_interface!
+  test-unit (~> 3.0)
+
+BUNDLED WITH
+   2.3.17
