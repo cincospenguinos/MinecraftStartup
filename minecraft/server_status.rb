@@ -29,7 +29,7 @@ class StatusHandler
   end
 
   def status
-    'OFF'
+    'OFFLINE'
   end
 
   def players
@@ -37,6 +37,7 @@ class StatusHandler
   end
 
   def start_minecraft
+    puts 'Starting minecraft!'
     `#{ENV['MINECRAFT_STARTUP_COMMAND']}`
   end
 end
@@ -47,5 +48,6 @@ handler = StatusHandler.new
 while !handler.shutdown do
   socket = server.accept
   command = socket.gets.chomp
+  puts "Received command! #{command}"
   socket.puts handler.handle(command)
 end

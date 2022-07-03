@@ -20,6 +20,6 @@ class StatusController < ApplicationController
   end
 
   def spigot_interface
-    @spigot_interface ||= ::Spigot::SpigotInterface.new(25_566) # TODO: Configure port
+    @spigot_interface ||= ::Spigot::SpigotInterface.new(ENV['MINECRAFT_STATUS_PORT'])
   end
 end

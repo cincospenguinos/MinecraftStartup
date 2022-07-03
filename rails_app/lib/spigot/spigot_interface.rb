@@ -7,6 +7,10 @@ module Spigot
       @port = port
     end
 
+    def start
+      submit_command('start')
+    end
+
     def status
       submit_command('status')
     end

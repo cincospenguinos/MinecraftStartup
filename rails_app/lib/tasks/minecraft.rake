@@ -5,7 +5,6 @@ require 'spigot/spigot_interface'
 namespace :minecraft do
   desc 'start the server in the directory provided'
   task :start, [:path] => :environment do |_, args|
-    spigot = ::Spigot::SpigotInterface.new(ENV['MINECRAFT_STATUS_PORT'])
     status = spigot.status
 
     handle_server_request if StartupRequest.pending? && status == :offline
@@ -16,16 +15,15 @@ namespace :minecraft do
     end
   end
 
-  def handle_server_request
-    request = StartupRequest.last
-    Dir.chdir(ENV['MINECRAFT_SERVER_PATH']) { start_server }
-    request.complete!
+  def spigot
+    @spigot ||= ::Spigot::SpigotInterface.new(ENV['MINECRAFT_STATUS_PORT'])
   end
 
-  def start_server
-    startup_cmd = "screen -L -dmS minecraft java -jar #{ENV['MINECRAFT_JAR']} #{ENV['MINECRAFT_JAR_ARGS']}"
-    pid = Process.spawn(startup_cmd)
-    Process.detach(pid)
+  def handle_server_request
+    request = StartupRequest.last
+    response = spigot.start
+    request.complete! unless response == :ok
+    puts "Could not start server! Response was #{response}" unless response == :ok
   end
 
   def wait_and_notify
