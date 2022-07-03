@@ -1,6 +1,5 @@
 package com.cincospenguinos.spigot_plugin.discord;
 
-import junit.framework.TestCase;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
@@ -79,7 +78,7 @@ public class DiscordBotTest {
             channels = Collections.singletonList(new MockTextChannel(channelName));
         }
 
-        private class MockTextChannel implements TextChannel, MessageChannel {
+        private class MockTextChannel implements TextChannel {
             private String _channelName;
             private MockMessageAction lastMessageAction;
 

@@ -4,8 +4,13 @@ services:
     build: rails_app/
     ports:
       - "80:80"
+    environment:
+      RUBY_VERSION: "2.7.6"
   minecraft:
     build: minecraft/
+    environment:
+      RUBY_VERSION: "2.7.6"
+      MINECRAFT_STARTUP_COMMAND: "screen -dmS minecraft java -jar /root/minecraft/minecraft_server/minecraft_server.jar"
     ports:
       - "25565:25565"
       - "25566:25566"

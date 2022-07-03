@@ -9,10 +9,7 @@ module Spigot
     end
 
     def status
-      response = submit_command('status')
-      return :online unless response.nil?
-
-      :offline
+      submit_command('status')
     end
 
     def count_current_players
@@ -32,7 +29,7 @@ module Spigot
 
     def submit_command(cmd)
       socket = TCPSocket.new('localhost', @port)
-      socket.print(cmd + "\n")
+      socket.puts(cmd)
       response = socket.gets.chomp
       socket.close
       response.downcase.to_sym

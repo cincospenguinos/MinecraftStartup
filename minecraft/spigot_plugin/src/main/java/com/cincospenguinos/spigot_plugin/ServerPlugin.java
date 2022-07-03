@@ -1,6 +1,9 @@
 package com.cincospenguinos.spigot_plugin;
 
 import com.cincospenguinos.spigot_plugin.discord.DiscordBot;
+
+import java.io.IOException;
+
 import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -52,6 +55,14 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
         server.shutdown();
 
         interactionServer.stop();
+
+        try {
+            Runtime.getRuntime().exec("status_server.rb");
+        } catch (IOException e) {
+            System.err.println("Could not start status server!");
+            e.printStackTrace();
+            getLogger().warning("Could not start status server!");
+        }
     }
 
     @Override

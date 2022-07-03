@@ -1,7 +1,6 @@
 FROM ubuntu:20.04 AS build
 
-ARG APP_RUBY_VERSION=2.7.6
-ARG APP_NODE_VERSION=12
+ARG RUBY_VERSION=2.7.6
 ARG RAILS_ENV=development
 ARG SECRET_KEY_BASE=
 
@@ -18,8 +17,8 @@ RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 ENV PATH="/root/.rbenv/bin:/root/.rbenv/shims:$PATH"
 RUN mkdir -p "$(rbenv root)"/plugins
 RUN git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
-RUN rbenv install $APP_RUBY_VERSION
-RUN rbenv global $APP_RUBY_VERSION
+RUN rbenv install $RUBY_VERSION
+RUN rbenv global $RUBY_VERSION
 
 # Install node via nvm & yarn
 RUN curl -sL https://deb.nodesource.com/setup_12.x | /bin/bash

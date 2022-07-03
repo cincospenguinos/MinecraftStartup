@@ -51,6 +51,8 @@ public class InteractionServer implements Runnable {
                 submitResponseTo(client, request);
                 client.close();
             }
+
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
             logInfo("Server crapped out");

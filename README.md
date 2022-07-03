@@ -1,16 +1,24 @@
 # Minecraft Startup Server
 
-All the tools I use to maintain my minecraft server.
+A fully configured minecraft server running latest spigot.
 
-## What does it entail?
+## How does it work?
 
-* `rails_app` contains the Rails application that manages users, starts/stops the minecraft server, and does anything else that the web app needs to do
-* `spigot_plugin` contains the plugin specifically for the web app. It's a little plugin that listens for connections and commands via localhost
+There are two major components:
 
-## How do I deploy it?
+1. A rails application that handles users starting/stopping the server, found in `rails_app`
+1. The minecraft server that handles start/stop requests and exposes extra information as needed, found in `minecraft`
 
-I don't know! I haven't figured that out yet.
+## Developing
 
-## Can I clone it and use it?
+I strongly suggest getting all the little tools you need on whatever platform you're on to work on each of the components individually. Deployment is done with docker.
 
-Sure! Feel free to modify it to your heart's content. If you have bugfixes I'd really appreciate if you submit a PR, but otherwise it's available for free use.
+No matter what, always always **always** add tests for your changes.
+
+## Deploying
+
+TODO
+
+## Can I clone it, use it, modify it, etc?
+
+Absolutely! I am keeping this open source for my own benefit, but if you can figure out how to get everything working, feel free to adapt it to your own use case.
