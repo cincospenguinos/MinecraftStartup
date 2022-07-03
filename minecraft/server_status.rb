@@ -37,11 +37,11 @@ class StatusHandler
   end
 
   def start_minecraft
-    `#{ENV[MINECRAFT_STARTUP_COMMAND]}`
+    `#{ENV['MINECRAFT_STARTUP_COMMAND']}`
   end
 end
 
-server = TCPServer.new(25566)
+server = TCPServer.new("0.0.0.0", ENV['MINECRAFT_STATUS_PORT'])
 handler = StatusHandler.new
 
 while !handler.shutdown do

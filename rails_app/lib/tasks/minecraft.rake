@@ -5,7 +5,7 @@ require 'spigot/spigot_interface'
 namespace :minecraft do
   desc 'start the server in the directory provided'
   task :start, [:path] => :environment do |_, args|
-    spigot = ::Spigot::SpigotInterface.new(25_566)
+    spigot = ::Spigot::SpigotInterface.new(ENV['MINECRAFT_STATUS_PORT'])
     status = spigot.status
 
     handle_server_request if StartupRequest.pending? && status == :offline
@@ -29,7 +29,7 @@ namespace :minecraft do
   end
 
   def wait_and_notify
-    spigot = ::Spigot::SpigotInterface.new(25_566)
+    spigot = ::Spigot::SpigotInterface.new(ENV['MINECRAFT_STATUS_PORT'])
     request = StartupRequest.last
 
     10.times do
@@ -44,7 +44,7 @@ namespace :minecraft do
 
   desc 'stop the server if it is time'
   task stop: :environment do
-    interface = ::Spigot::SpigotInterface.new(25_566)
+    interface = ::Spigot::SpigotInterface.new(ENV['MINECRAFT_STATUS_PORT'])
     status = interface.status
     return unless status == :online
 

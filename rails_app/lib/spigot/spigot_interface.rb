@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require 'socket'
 
 module Spigot
@@ -28,7 +27,7 @@ module Spigot
     private
 
     def submit_command(cmd)
-      socket = TCPSocket.new('localhost', @port)
+      socket = TCPSocket.new(ENV['MINECRAFT_SERVICE_NAME'], @port)
       socket.puts(cmd)
       response = socket.gets.chomp
       socket.close
