@@ -4,6 +4,10 @@ module SpigotInterface
   
   class SpigotConnection
     def initialize: () -> void
-    def submit_command: (command: String) -> String
+    def start: () -> String
+    def stop: () -> String
+    def notify: () -> String
+    def status: () -> String
+    def players: () -> String
   end
 end

@@ -14,7 +14,7 @@ GEM
     thor (1.2.1)
 
 PLATFORMS
-  x86_64-linux
+  ruby
 
 DEPENDENCIES
   rake (~> 13.0)
@@ -22,4 +22,4 @@ DEPENDENCIES
   test-unit (~> 3.0)
 
 BUNDLED WITH
-   2.3.17
+   2.1.4

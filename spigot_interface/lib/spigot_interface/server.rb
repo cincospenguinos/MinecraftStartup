@@ -1,6 +1,8 @@
+require_relative 'spigot_connection'
+
 module SpigotInterface
   class Server
-    ACCEPTED_COMMANDS = %w(status start stop players notify).freeze
+    ACCEPTED_COMMANDS = (SpigotInterface::SpigotConnection.instance_methods - Object.instance_methods).freeze
     attr_reader :spigot
 
     def initialize(port, spigot_connection = nil)
@@ -10,20 +12,27 @@ module SpigotInterface
 
     def handle
       client = @server.accept
-      command = client.gets.chomp
+      command = client.gets.chomp.to_sym
+      response = 'not_accepted'
 
       if ACCEPTED_COMMANDS.include?(command)
-        response = spigot.submit_command(command)
-        client.puts(response)
-      else
-        client.puts('not_accepted')
+        response = ask_spigot(command)
       end
 
+      client.puts(response)
       client.close
     end
 
     def close
       @server.close
+    end
+
+    private
+
+    def ask_spigot(command)
+      spigot.send(command)
+    rescue
+      'offline'
     end
   end
 end
