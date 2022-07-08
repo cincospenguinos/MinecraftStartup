@@ -12,10 +12,16 @@ services:
   minecraft:
     build: minecraft/
     environment:
-      MINECRAFT_STARTUP_COMMAND: "screen -dmS minecraft java -jar /root/minecraft/minecraft_server/minecraft-server.jar"
+      MINECRAFT_STARTUP_COMMAND: "screen -dmS minecraft java -jar /root/minecraft/minecraft-server.jar"
       MINECRAFT_STATUS_PORT: 25566
       SPIGOT_HOST_NAME: "localhost"
       SPIGOT_PORT: "25567"
     ports:
       - "25565:25565"
       - "25566:25566"
+    volumes:
+      - minecraft-data:/root/minecraft
+volumes:
+  minecraft-data:
+    external: true
+    name: minecraft-data

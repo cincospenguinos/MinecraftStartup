@@ -19,6 +19,7 @@ RUN mkdir /tmp/spigot_plugin
 COPY spigot_plugin /tmp/spigot_plugin
 WORKDIR /tmp/spigot_plugin
 RUN mvn package
+RUN mv /tmp/spigot_plugin/target/AndresServerPlugin-jar-with-dependencies.jar /tmp/spigot_plugin/AndreServerPlugin.jar
 
 # Build spigot
 RUN mkdir /tmp/build_spigot
@@ -26,14 +27,6 @@ WORKDIR /tmp/build_spigot
 RUN wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
 RUN java -jar BuildTools.jar
 RUN mv spigot**.jar minecraft-server.jar
-
-# Copy server files and install spigot
-RUN mkdir /root/minecraft
-RUN mkdir /root/minecraft/minecraft_server
-COPY ./.devserver/* /root/minecraft/minecraft_server
-RUN mv minecraft-server.jar /root/minecraft/minecraft_server
-RUN mkdir -p /root/minecraft/minecraft_server/plugins
-RUN mv /tmp/spigot_plugin/target/AndresServerPlugin-jar-with-dependencies.jar /root/minecraft/minecraft_server/plugins/
 
 # Build and install spigot_interface
 RUN mkdir /tmp/spigot_interface
@@ -44,5 +37,6 @@ RUN bundle install
 RUN gem build
 RUN gem install --local spigot_interface-*.gem
 
-WORKDIR /root/minecraft/minecraft_server
-CMD spigot_interface serve $MINECRAFT_STATUS_PORT
+COPY startup.rb /root
+WORKDIR /root/minecraft
+CMD ruby /root/startup.rb
