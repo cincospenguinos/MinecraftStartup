@@ -10,6 +10,7 @@ class SpigotInterfaceCLI < Thor
       exit 1
     end
 
+    puts "Serving on port #{port}"
     server = SpigotInterface::Server.new(port)
     loop { server.handle }
   end

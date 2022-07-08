@@ -20,13 +20,8 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = spec.homepage
   spec.metadata["changelog_uri"] = spec.homepage
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files = Dir.chdir(__dir__) do
-    `git ls-files -z`.split("\x0").reject do |f|
-      (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|travis|circleci)|appveyor)})
-    end
-  end
+  # I added all of these files individually because we are building this in the context of docker
+  spec.files = ["CHANGELOG.md", "CODE_OF_CONDUCT.md", "Gemfile", "Gemfile.lock", "LICENSE.txt", "README.md", "Rakefile", "lib/spigot_interface.rb", "lib/spigot_interface/client.rb", "lib/spigot_interface/server.rb", "lib/spigot_interface/spigot_connection.rb", "lib/spigot_interface/version.rb", "sig/spigot_interface.rbs", "spigot_interface.gemspec"]
   spec.bindir = "bin"
   spec.executables = %w(spigot_interface)
   spec.require_paths = ["lib"]

@@ -1,14 +1,12 @@
 FROM eclipse-temurin:17
 
+ARG MINECRAFT_STATUS_PORT
+
 SHELL ["/bin/bash", "-c"]
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
 RUN apt update
 RUN apt install -y wget git libreadline-dev unzip zip libssl-dev zlib1g-dev bzip2 build-essential ruby screen
-
-RUN mkdir /root/bin
-COPY server_status.rb /root/bin
-ENV PATH="/root/bin:$PATH"
 
 # Get Maven
 WORKDIR /opt
@@ -33,9 +31,17 @@ RUN mv spigot**.jar minecraft_server.jar
 # Copy server files and install spigot
 RUN mkdir /root/minecraft
 RUN mkdir /root/minecraft/minecraft_server
-
 COPY ./.devserver/* /root/minecraft/minecraft_server
 RUN mv minecraft_server.jar /root/minecraft/minecraft_server
 RUN mv /tmp/spigot_plugin/target/AndresServerPlugin-jar-with-dependencies.jar /root/minecraft/minecraft_server/plugins
 
-CMD ["ruby", "/root/bin/server_status.rb"]
+# Build and install spigot_interface
+RUN mkdir /tmp/spigot_interface
+COPY spigot_interface /tmp/spigot_interface
+WORKDIR /tmp/spigot_interface
+RUN gem install bundler
+RUN bundle install
+RUN gem build
+RUN gem install --local spigot_interface-*.gem
+
+CMD spigot_interface serve $MINECRAFT_STATUS_PORT
