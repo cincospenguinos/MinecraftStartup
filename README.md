@@ -22,3 +22,11 @@ TODO
 ## Can I clone it, use it, modify it, etc?
 
 Absolutely! I am keeping this open source for my own benefit, but if you can figure out how to get everything working, feel free to adapt it to your own use case.
+
+## TODO, as part of getting docker put together
+
+- [ ] Create a volume and have _it_ store all of the minecraft server data. For development that can be .devserver
+- [ ] Create a volume for the DB, and put the DB in there. It could just be a sqlite DB, but there's security concerns on that front
+- [ ] Figure out a way to pull the spigot plugin ruby gem from github. [This guy's article may help getting it together with workflows](https://michaelheap.com/rubygem-github-package-registry/)
+- [ ] Figure out a way to publish your docker containers up to github. Maybe consolidate the two down to just a single container with everything installed to save space
+- [ ] Figure out how bundle --vendor works to make the build step a lot faster

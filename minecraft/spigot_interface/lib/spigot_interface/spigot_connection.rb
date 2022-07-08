@@ -2,7 +2,9 @@ module SpigotInterface
   class SpigotConnection
     def start
       return 'OK' if status == 'ONLINE'
-      submit_command('start')
+      pid = Process.fork { `#{ENV['MINECRAFT_STARTUP_COMMAND']}` }
+      Process.detach(pid)
+      'OK'
     end
 
     def stop
@@ -16,6 +18,8 @@ module SpigotInterface
 
     def status
       submit_command('status')
+    rescue
+      'OFFLINE'
     end
 
     def players

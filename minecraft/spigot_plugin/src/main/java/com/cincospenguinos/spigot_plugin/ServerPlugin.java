@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 // TODO: Add minecart chunk loading behavior as well
 
 public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
-    public static final int SERVER_PLUGIN_PORT = 25566;
+    public static final int SERVER_PLUGIN_PORT = 25567;
     private final FileConfiguration configuration = getConfig();
     private InteractionServer interactionServer;
     private DiscordBot bot;

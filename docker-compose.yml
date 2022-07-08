@@ -12,7 +12,7 @@ services:
   minecraft:
     build: minecraft/
     environment:
-      MINECRAFT_STARTUP_COMMAND: "screen -dmS minecraft java -jar /root/minecraft/minecraft_server/minecraft_server.jar"
+      MINECRAFT_STARTUP_COMMAND: "screen -dmS minecraft java -jar /root/minecraft/minecraft_server/minecraft-server.jar"
       MINECRAFT_STATUS_PORT: 25566
       SPIGOT_HOST_NAME: "localhost"
       SPIGOT_PORT: "25567"

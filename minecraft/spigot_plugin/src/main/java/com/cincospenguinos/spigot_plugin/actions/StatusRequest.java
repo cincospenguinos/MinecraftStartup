@@ -12,7 +12,7 @@ public class StatusRequest extends RailsRequest {
 
     @Override
     public String response() {
-        return "OK";
+        return "ONLINE";
     }
 
     @Override

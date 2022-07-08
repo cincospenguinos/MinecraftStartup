@@ -1,8 +1,8 @@
 FROM ubuntu:20.04 AS build
 
-ARG RUBY_VERSION=3.0.2
-ARG RAILS_ENV=development
-ARG SECRET_KEY_BASE=
+ARG RUBY_VERSION=2.7.6
+ARG RAILS_ENV
+ARG SECRET_KEY_BASE
 
 SHELL ["/bin/bash", "-c"]
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -35,9 +35,10 @@ RUN gem install bundler
 RUN bundle install
 RUN yarn install
 RUN bundle exec rake webpacker:compile
-RUN bundle exec whenever --update-crontab
+RUN bundle exec whenever --set "environment=${RAILS_ENV}" --update-crontab
 RUN bundle exec rake db:migrate
 RUN bundle exec rake db:seed
 
 EXPOSE 80
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "80"]
+COPY startup.sh /root/rails_app
+CMD /root/rails_app/startup.sh

@@ -13,11 +13,14 @@ module SpigotInterface
     def handle
       client = @server.accept
       command = client.gets.chomp.to_sym
+      puts "Received command \"#{command}\""
       response = 'not_accepted'
 
       if ACCEPTED_COMMANDS.include?(command)
         response = ask_spigot(command)
       end
+
+      puts "Responding with \"#{response}\""
 
       client.puts(response)
       client.close
