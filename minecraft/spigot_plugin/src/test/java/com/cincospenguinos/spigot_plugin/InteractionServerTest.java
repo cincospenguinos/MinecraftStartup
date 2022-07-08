@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class InteractionServerTest {
     private InteractionServer server;
-    private static final int TEST_PORT = 25567;
+    private static final int TEST_PORT = 29999;
 
     @Before
     public void setup() {
@@ -34,7 +34,7 @@ public class InteractionServerTest {
     @Test
     public void serverUnderstandsStatus() {
         String response = sendMessageToServer("status");
-        assertEquals("OK", response);
+        assertEquals("ONLINE", response);
     }
 
     @Test

@@ -55,20 +55,13 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
         server.shutdown();
 
         interactionServer.stop();
-
-        try {
-            Runtime.getRuntime().exec("status_server.rb");
-        } catch (IOException e) {
-            System.err.println("Could not start status server!");
-            e.printStackTrace();
-            getLogger().warning("Could not start status server!");
-        }
     }
 
     @Override
-    public void notifyDiscordRequest() {
+    public boolean notifyDiscordRequest() {
         String botToken = configuration.getString("discord_bot_token");
         String channelName = configuration.getString("discord_channel_id");
+        boolean wasAbleToNotify = false;
 
         if (botToken == null || channelName == null) {
             getLogger().warning("No discord bot token provided! Will not be able to integrate with Discord!");
@@ -76,9 +69,12 @@ public class ServerPlugin extends JavaPlugin implements ServerInfoSource {
             bot = new DiscordBot(botToken, channelName);
             if (bot.login()) {
                 bot.sendMessage("@everyone The server is up! Come on in and join the fun!");
+                wasAbleToNotify = true;
             } else {
                 getLogger().warning("Could not login as Discord bot!");
             }
         }
+
+        return wasAbleToNotify;
     }
 }

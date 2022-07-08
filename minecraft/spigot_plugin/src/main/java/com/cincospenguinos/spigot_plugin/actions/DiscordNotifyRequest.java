@@ -21,6 +21,8 @@ public class DiscordNotifyRequest extends RailsRequest {
 
     @Override
     public void process(ServerInfoSource source) {
-        source.notifyDiscordRequest();
+        if (source.notifyDiscordRequest()) {
+            response = "OK";
+        }
     }
 }
