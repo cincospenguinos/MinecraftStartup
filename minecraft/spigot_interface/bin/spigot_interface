@@ -11,8 +11,13 @@ class SpigotInterfaceCLI < Thor
     end
 
     puts "Serving on port #{port}"
-    server = SpigotInterface::Server.new(port)
-    loop { server.handle }
+    loop do
+      begin
+        server.handle
+      rescue Errno => e
+        puts "Received error #{e}"
+      end
+    end 
   end
 
   desc 'submit COMMAND HOST PORT', 'Submit a command to the interaction server given host and port'

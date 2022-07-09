@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require 'fileutils'
-require 'spigot_interface'
 
 puts 'Checking for minecraft files...'
 has_minecraft = Dir['/root/minecraft/**.jar'].any? { |f| f.include?('minecraft-server.jar') }

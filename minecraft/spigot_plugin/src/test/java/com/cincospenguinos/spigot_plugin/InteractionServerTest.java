@@ -88,6 +88,8 @@ public class InteractionServerTest {
         public void notifyStopRequest() {}
 
         @Override
-        public void notifyDiscordRequest() {}
+        public boolean notifyDiscordRequest() {
+            return true;
+        }
     }
 }
