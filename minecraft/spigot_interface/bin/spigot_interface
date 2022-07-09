@@ -11,6 +11,7 @@ class SpigotInterfaceCLI < Thor
     end
 
     puts "Serving on port #{port}"
+    server = SpigotInterface::Server.new(port)
     loop do
       begin
         server.handle
