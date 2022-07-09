@@ -6,7 +6,6 @@ namespace :minecraft do
   desc 'start the server in the directory provided'
   task :start, [:path] => :environment do |_, args|
     status = spigot.status
-
     handle_server_request if StartupRequest.pending? && status == :offline
 
     if StartupRequest.last.notify?
@@ -22,7 +21,7 @@ namespace :minecraft do
   def handle_server_request
     request = StartupRequest.last
     response = spigot.start
-    request.complete! unless response == :ok
+    request.complete! if response == :ok
     puts "Could not start server! Response was #{response}" unless response == :ok
   end
 

@@ -7,7 +7,7 @@ services:
     environment:
       RUBY_VERSION: "3.0.2"
       MINECRAFT_SERVICE_NAME: "minecraft"
-      MINECRAFT_STATUS_PORT: "25566"
+      MINECRAFT_STATUS_PORT: 25566
       RAILS_ENV: "development"
   minecraft:
     build: minecraft/

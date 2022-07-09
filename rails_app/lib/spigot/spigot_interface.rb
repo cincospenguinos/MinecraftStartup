@@ -38,6 +38,10 @@ module Spigot
       response.downcase.to_sym
     rescue Errno::ECONNREFUSED
       nil
+    rescue Error => e
+      puts 'COULD NOT HANDLE COMMAND!'
+      puts e
+      nil
     end
   end
 end
