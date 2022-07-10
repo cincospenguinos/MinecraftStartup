@@ -43,9 +43,8 @@ namespace :minecraft do
   task stop: :environment do
     interface = ::Spigot::SpigotInterface.new(ENV['MINECRAFT_STATUS_PORT'])
     status = interface.status
-    return unless status == :online
 
-    interface.stop if !in_time_provision && no_players?(interface)
+    interface.stop if status == :online && !in_time_provision && no_players?(interface)
   end
 
   def in_time_provision

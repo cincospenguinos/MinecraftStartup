@@ -7,16 +7,18 @@ services:
     environment:
       MINECRAFT_SERVICE_NAME: "minecraft"
       MINECRAFT_STATUS_PORT: 25566
-      RAILS_ENV: "development"
+      RAILS_ENV: ${RAILS_ENV}
+      ANDRE_GMAIL_USERNAME: ${ANDRE_GMAIL_USERNAME}
+      ANDRE_GMAIL_PASSWORD: ${ANDRE_GMAIL_PASSWORD}
     volumes:
       - rails-db:/root/rails_app/db
   minecraft:
     build: minecraft/
     environment:
-      MINECRAFT_STARTUP_COMMAND: "screen -dmS minecraft java -jar /root/minecraft/minecraft-server.jar"
+      MINECRAFT_STARTUP_COMMAND: ${MINECRAFT_STARTUP_COMMAND}
       MINECRAFT_STATUS_PORT: 25566
-      SPIGOT_HOST_NAME: "localhost"
-      SPIGOT_PORT: 25567
+      SPIGOT_HOST_NAME: ${SPIGOT_HOST_NAME}
+      SPIGOT_PORT: ${SPIGOT_PORT}
     ports:
       - "25565:25565"
       - "25566:25566"
