@@ -43,5 +43,5 @@ RUN bundle exec whenever -i
 RUN bundle exec rake db:migrate
 RUN bundle exec rake db:seed
 
-EXPOSE 80
-CMD service cron start && bundle exec whenever --update-crontab && bundle exec rails s -b 0.0.0.0 -p 80
+EXPOSE 3000
+CMD service cron start && bundle exec whenever --update-crontab && bundle exec rails s -b 0.0.0.0 -p 3000
