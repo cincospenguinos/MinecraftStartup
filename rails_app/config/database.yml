@@ -22,8 +22,4 @@ test:
 
 production:
   <<: *default
-  adapter: mysql2
-  host: localhost
-  user: root
-  password: <%= ENV.fetch('MYSQL_ROOT_PASSWORD') { '' } %>
-  database: mc_startup
+  database: db/production.sqlite3

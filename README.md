@@ -27,13 +27,26 @@ Absolutely! I am keeping this open source for my own benefit, but if you can fig
 
 - [x] Create a volume and have _it_ store all of the minecraft server data. For development that can be .devserver
 - [x] Adjust the notify command to return OK or ERROR in Spigot
-- [ ] Fix spigot_plugin to respect receiving nil or empty string from client
-- [ ] Have spigot_plugin catch, print, and retry always
-- [ ] Figure out how to put together a mysql DB volume for prod. I think that's what's on the host right now...
-- [ ] Put together environment variables for deploying to prod
-- [ ] Figure out method of deploying to prod
+- [x] Have spigot_plugin catch, print, and retry always
+- [x] Put together environment variables for deploying to prod
+- [x] Figure out method of deploying to prod
+- [ ] Put sqlite3 volume together
+
+### Deploying to prod
+
+- [x] Get a sql dump of the MySQL
+- [x] Bring up SQLite and transfer MySQL over to SQLite
+- [x] Install Docker and Docker Compose
+- [ ] Get latest version of application and build it
+- [ ] Put together environment file that overrites various environment variables according to our needs
+- [ ] Run the application in detached mode to ensure the volumes get built
+- [ ] Copy the mysql dump up into the rails container
+- [ ] Use sqlite to dump sqlite DB into recently built db
+- [ ] Configure nginx to do proxy_pass to the localhost's server
+- [ ] Ensure everything works as intended
 
 ## TODO, as something nice to do later
+- [ ] Fix spigot_plugin to respect receiving nil or empty string from client
 - [ ] Figure out a way to pull the spigot plugin ruby gem from github. [This guy's article may help getting it together with workflows](https://michaelheap.com/rubygem-github-package-registry/)
 - [ ] Figure out a way to publish your docker containers up to github. Maybe consolidate the two down to just a single container with everything installed to save space
 - [ ] Figure out how bundle --vendor works to make the build step a lot faster
