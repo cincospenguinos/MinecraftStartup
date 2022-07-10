@@ -23,15 +23,6 @@ TODO
 
 Absolutely! I am keeping this open source for my own benefit, but if you can figure out how to get everything working, feel free to adapt it to your own use case.
 
-## TODO, as part of getting docker put together
-
-- [x] Create a volume and have _it_ store all of the minecraft server data. For development that can be .devserver
-- [x] Adjust the notify command to return OK or ERROR in Spigot
-- [x] Have spigot_plugin catch, print, and retry always
-- [x] Put together environment variables for deploying to prod
-- [x] Figure out method of deploying to prod
-- [ ] Put sqlite3 volume together
-
 ### Deploying to prod
 
 - [x] Get a sql dump of the MySQL

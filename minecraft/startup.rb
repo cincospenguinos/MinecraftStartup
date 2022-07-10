@@ -15,4 +15,4 @@ unless has_minecraft
 end
 
 puts 'Starting spigot interface server...'
-`spigot_interface serve #{ENV['MINECRAFT_STATUS_PORT']}`
+Process.exec("spigot_interface serve #{ENV['MINECRAFT_STATUS_PORT']}")

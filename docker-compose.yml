@@ -5,7 +5,6 @@ services:
     ports:
       - "80:80"
     environment:
-      RUBY_VERSION: "3.0.2"
       MINECRAFT_SERVICE_NAME: "minecraft"
       MINECRAFT_STATUS_PORT: 25566
       RAILS_ENV: "development"
@@ -25,8 +24,6 @@ services:
       - minecraft-data:/root/minecraft
 volumes:
   minecraft-data:
-    external: true
     name: minecraft-data
   rails-db:
-    external: true
     name: rails-db
