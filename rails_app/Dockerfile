@@ -33,7 +33,8 @@ RUN apt install --no-install-recommends -y yarn
 
 COPY . /root/rails_app
 WORKDIR /root/rails_app
-RUN gem install bundler
+RUN gem update --system
+RUN gem install bundler -v "$(grep -A 1 'BUNDLED WITH' Gemfile.lock | tail -n 1)"
 RUN bundle install
 RUN yarn install
 RUN bundle exec rake webpacker:compile
